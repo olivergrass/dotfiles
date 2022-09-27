@@ -99,7 +99,7 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 export EDITOR=vim -f
-export VISUAL=bat
+export VISUAL=vim -f
 
 # Sets default pager as less
 export PAGER=less
