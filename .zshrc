@@ -78,9 +78,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git
-	colorize
-	command-not-found
+        git
+        colorize
+        command-not-found
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -99,7 +99,16 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 export EDITOR=nano
-export VISUAL=nano
+export VISUAL=bat
+
+# Sets default pager as less
+export PAGER=less
+
+# Sets bat as default pager for man
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# Googler shows 5 results
+alias google='googler -n 5'
 
 # Style for colorize plugin
 ZSH_COLORIZE_STYLE="monokai"
@@ -120,12 +129,13 @@ ZSH_COLORIZE_STYLE="monokai"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ===============================
-# 		nnn
+#               nnn
 # ===============================
 n ()
 {
-    export NNN_PLUG="p:preview-tui"
     export NNN_FIFO='/tmp/nnn.fifo'
+    export NNN_FCOLORS='0000E6310000000000000000'
+    export NNN_PLUG="p:preview-tui;a:autojump"
 
     # Block nesting of nnn in subshells
     if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
@@ -149,7 +159,7 @@ n ()
     if [ -n "$TMUX" ]; then
         nnn -e $@
     else
-        tmux new-session 'export EDITOR=nano;nnn -e $@'
+        tmux new-session 'nnn -e $@'
     fi
 
     if [ -f "$NNN_TMPFILE" ]; then
@@ -158,6 +168,17 @@ n ()
     fi
 }
 
+# Set GWSL as X Server
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0 #GWSL
 export PULSE_SERVER=tcp:$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}') #GWSL
 export LIBGL_ALWAYS_INDIRECT=1 #GWSL
+
+eval "$(zoxide init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
