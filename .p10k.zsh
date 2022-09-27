@@ -346,8 +346,8 @@
   # back to POWERLEVEL9K_DIR_FOREGROUND.
   #
   typeset -g POWERLEVEL9K_DIR_CLASSES=(
-	'~'	HOME     ''
-	'*'	DEFAULT  ''
+        '~'     HOME     ''
+        '*'     DEFAULT  ''
 )
 
   # Custom prefix.
