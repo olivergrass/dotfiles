@@ -32,9 +32,17 @@ call plug#begin()
  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
+" NERDTREE OPTIONS
 " Mirror the NERDTree before showing it. This makes it the same on all tabs.
 nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeMirror<CR>:NERDTreeToggle<CR>
+
+" AIRLINE OPTIONS
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'dracula'
+set showtabline=2 " Always show tabs
+set nowshowmode   " We don't need to see -- INSERT -- anymore
 
 " color schemes
 if (has("termguicolors"))
