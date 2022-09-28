@@ -1,4 +1,4 @@
-set ocompatible            " disable compatibility to old-time vi
+set compatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
 set mouse=v                 " middle-click paste with 
@@ -44,4 +44,4 @@ syntax enable
 colorscheme dracula
 " open new split panes to right and below
 set splitright
-set splitbelown
+set splitbelow
