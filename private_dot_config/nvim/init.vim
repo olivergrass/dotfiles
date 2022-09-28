@@ -41,8 +41,6 @@ set noshowmode   " We don't need to see -- INSERT -- anymore
 
 " CHADTREE OPTIONS
 nnoremap <leader>v <cmd>CHADopen<cr>
-let g:chadtree_settings = {
-    'keymap.tertiary': ["<c-enter>", "<middlemouse>"]
-    }
+let g:chadtree_settings = {'keymap.tertiary': ["<c-enter>", "<middlemouse>"]}
 
 colorscheme onedark
