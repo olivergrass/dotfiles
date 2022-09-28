@@ -23,20 +23,33 @@ set noswapfile              " disable creating swap file
 set backupdir=~/.cache/vim  " Directory to store backup files.
 
 call plug#begin()
- Plug 'joshdick/onedark.vim'
+ Plug 'dracula/vim'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'scrooloose/nerdtree'
  Plug 'mhinz/vim-startify'
- Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
- Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
  Plug 'vim-airline/vim-airline' 
  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
+" NERDTREE OPTIONS
+" Mirror the NERDTree before showing it. This makes it the same on all tabs.
+nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+nnoremap <C-t> :NERDTreeMirror<CR>:NERDTreeToggle<CR>
+
 " AIRLINE OPTIONS
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'dracula'
 let g:airline#extensions#tabline#formatter = 'unique_tail' " Use reasonable tab names
 set showtabline=2 " Always show tabs
 set noshowmode   " We don't need to see -- INSERT -- anymore
 
-colorscheme onedark
+" color schemes
+if (has("termguicolors"))
+set termguicolors
+endif
+syntax enable
+colorscheme dracula
+" open new split panes to right and below
+set splitright
+set splitbelow
