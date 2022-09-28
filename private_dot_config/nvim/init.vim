@@ -39,4 +39,8 @@ let g:airline#extensions#tabline#formatter = 'unique_tail' " Use reasonable tab 
 set showtabline=2 " Always show tabs
 set noshowmode   " We don't need to see -- INSERT -- anymore
 
+" CHADTREE OPTIONS
+nnoremap <leader>v <cmd>CHADopen<cr>
+let g:chadtree_settings.keymap.tertiary = ["<c-enter>", "<middlemouse>"]
+
 colorscheme onedark
