@@ -168,10 +168,8 @@ n ()
     fi
 }
 
-# Set GWSL as X Server
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0 #GWSL
-export PULSE_SERVER=tcp:$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}') #GWSL
-export LIBGL_ALWAYS_INDIRECT=1 #GWSL
+# Set X11 as X Server
+export DISPLAY=:0
 
 eval "$(zoxide init zsh)"
 
