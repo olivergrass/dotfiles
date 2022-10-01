@@ -57,7 +57,7 @@ nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
 colorscheme onedark
 
 lua << EOF
-local lsp = require "lspconfig"
-local coq = require "coq"
-lsp.pyright.setup{coq.lsp_ensure_capabilities()}
+local lsp = require 'lspconfig'
+local coq = require 'coq'
+lsp.pyright.setup{}
 EOF
