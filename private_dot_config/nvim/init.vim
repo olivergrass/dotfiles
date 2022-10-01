@@ -47,7 +47,7 @@ let g:chadtree_settings = {'keymap.secondary': ["<m-enter>", "<middlemouse>"],'k
 autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "CHADTree") | q! | endif
 
 " COQ OPTIONS
-let g:coq_settings = { 'auto_start': 'shut-up','.display.icons.spacing': 2 }
+let g:coq_settings = { 'auto_start': 'shut-up','display.icons.spacing': 2 }
 
 " TAB AND BUFFER SWITCHING
 nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
