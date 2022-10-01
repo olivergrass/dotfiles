@@ -42,5 +42,8 @@ set noshowmode   " We don't need to see -- INSERT -- anymore
 " CHADTREE OPTIONS
 nnoremap <leader>v <cmd>CHADopen<cr>
 let g:chadtree_settings = {'keymap.secondary': ["<m-enter>", "<middlemouse>"],'keymap.tertiary': ["<tab>", "<2-leftmouse>"]}
+autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "CHADTree") | q! | endif
+nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
+nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
 
 colorscheme onedark
