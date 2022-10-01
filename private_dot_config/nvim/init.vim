@@ -22,6 +22,7 @@ set spell                   " enable spell check (may need to download language 
 set noswapfile              " disable creating swap file
 set backupdir=~/.cache/vim  " Directory to store backup files.
 
+" LOAD PLUGINS
 call plug#begin()
  Plug 'joshdick/onedark.vim'
  Plug 'mhinz/vim-startify'
@@ -43,6 +44,11 @@ set noshowmode   " We don't need to see -- INSERT -- anymore
 nnoremap <leader>v <cmd>CHADopen<cr>
 let g:chadtree_settings = {'keymap.secondary': ["<m-enter>", "<middlemouse>"],'keymap.tertiary': ["<tab>", "<2-leftmouse>"]}
 autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "CHADTree") | q! | endif
+
+" COQ OPTIONS
+let g:coq_settings = { 'auto_start': 'shut-up' }
+
+" TAB AND BUFFER SWITCHING
 nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
 nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
 
