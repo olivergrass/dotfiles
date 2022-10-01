@@ -29,6 +29,7 @@ call plug#begin()
  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+ Plug 'neovim/nvim-lspconfig'
  Plug 'vim-airline/vim-airline' 
  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
@@ -54,3 +55,9 @@ nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
 nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
 
 colorscheme onedark
+
+lua << EOF
+local lsp = require "lspconfig"
+local coq = require "coq"
+lsp.pyright.setup{coq.lsp_ensure_capabilities()}
+EOF
