@@ -27,6 +27,7 @@ call plug#begin()
  Plug 'joshdick/onedark.vim'
  Plug 'mhinz/vim-startify'
  Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
  Plug 'vim-airline/vim-airline' 
  Plug 'vim-airline/vim-airline-themes'
