@@ -17,7 +17,7 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:which_key_map = {}
-let g:which_key_map['/'] = [ ':Commentary'      , 'comment out selection' ]
+let g:which_key_map['/'] = [ ':Commentary'      , 'comment' ]
 let g:which_key_map['v'] = [ ':CHADopen'        , 'open CHADtree' ]
 let g:which_key_map['S'] = [ ':Startify'        , 'start screen' ]
 let g:which_key_map['E'] = [ ':SSave'           , 'save session' ]
@@ -45,7 +45,7 @@ let g:which_key_map['w'] = {
       \ '?' : ['Windows'    , 'fzf-window']            ,
       \ }
 let g:which_key_map.s = {
-      \ 'name' : '+search' ,
+      \ 'name' : '+search'     ,
       \ '/' : [':History/'     , 'history'],
       \ ';' : [':Commands'     , 'commands'],
       \ 'a' : [':Ag'           , 'text Ag'],
@@ -70,6 +70,25 @@ let g:which_key_map.s = {
       \ 'w' : [':Windows'      , 'search windows'],
       \ 'y' : [':Filetypes'    , 'file types'],
       \ 'z' : [':FZF'          , 'FZF'],
+      \ }
+let g:which_key_map.b = {
+      \ 'name' : '+buffer' ,
+      \ '1' : ['b1'        , 'buffer 1']        ,
+      \ '2' : ['b2'        , 'buffer 2']        ,
+      \ 'd' : ['bd'        , 'delete-buffer']   ,
+      \ 'f' : ['bfirst'    , 'first-buffer']    ,
+      \ 'h' : ['Startify'  , 'home-buffer']     ,
+      \ 'l' : ['blast'     , 'last-buffer']     ,
+      \ 'n' : ['bnext'     , 'next-buffer']     ,
+      \ 'p' : ['bprevious' , 'previous-buffer'] ,
+      \ '?' : ['Buffers'   , 'fzf-buffer']      ,
+      \ }
+let g:which_key_map.p = {
+      \ 'name' : '+plug'                        ,
+      \ 'i' : [':PlugInstall'                   , 'install'],
+      \ 'u' : [':PlugUpdate'                    , 'update'],
+      \ 'c' : [':PlugClean'                     , 'clean'],
+      \ 's' : [':source ~/.config/nvim/init.vim', 'source vimrc'],
       \ }
 
 " Register which key map
