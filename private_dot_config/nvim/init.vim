@@ -4,6 +4,7 @@ set ignorecase              " case insensitive
 set mouse=v                 " middle-click paste with 
 set hlsearch                " highlight search 
 set incsearch               " incremental search
+set timeoutlen=500          " get which-key guide
 set tabstop=4               " number of columns occupied by a tab 
 set softtabstop=4           " see multiple spaces as tab-stops so <BS> does the right thing
 set expandtab               " converts tabs to white space
@@ -21,6 +22,7 @@ set ttyfast                 " Speed up scrolling in Vim
 set spell                   " enable spell check (may need to download language package)
 set noswapfile              " disable creating swap file
 set backupdir=~/.cache/vim  " Directory to store backup files.
+let mapleader=" "
 
 " LOAD PLUGINS
 call plug#begin()
@@ -30,9 +32,20 @@ call plug#begin()
  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
  Plug 'neovim/nvim-lspconfig'
+ Plug 'liuchengxu/vim-which-key'
  Plug 'vim-airline/vim-airline' 
  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
+
+" TAB AND BUFFER SWITCHING
+nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
+nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
+
+" SET COLORSCHEME
+colorscheme onedark
+
+" WHICH-KEY OPTIONS
+source $HOME/.config/nvim/which-key.vim
 
 " AIRLINE OPTIONS
 let g:airline#extensions#tabline#enabled = 1
@@ -50,14 +63,15 @@ autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "
 " COQ OPTIONS
 let g:coq_settings = { 'auto_start': 'shut-up','display.icons.spacing': 2 }
 
-" TAB AND BUFFER SWITCHING
-nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
-nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
-
-colorscheme onedark
-
+" LSP OPTIONS
 lua << EOF
-local lsp = require 'lspconfig'
-local coq = require 'coq'
-lsp.pyright.setup{}
+local lspconfig = require('lspconfig')
+
+-- Enable some language servers with the additional completion capabilities offered by coq_nvim
+local servers = {'pyright', 'jdtls'}
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({
+    -- on_attach = my_custom_on_attach,
+  }))
+end
 EOF
