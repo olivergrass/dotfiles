@@ -4,7 +4,7 @@ set ignorecase              " case insensitive
 set mouse=v                 " middle-click paste with 
 set hlsearch                " highlight search 
 set incsearch               " incremental search
-set timeoutlen=500          " get which-key guide
+set timeoutlen=300          " get which-key guide
 set tabstop=4               " number of columns occupied by a tab 
 set softtabstop=4           " see multiple spaces as tab-stops so <BS> does the right thing
 set expandtab               " converts tabs to white space
@@ -33,6 +33,10 @@ call plug#begin()
  Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
  Plug 'neovim/nvim-lspconfig'
  Plug 'liuchengxu/vim-which-key'
+ Plug 'tpope/vim-commentary'
+ Plug 'tpope/vim-fugitive'
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'junegunn/fzf.vim'
  Plug 'vim-airline/vim-airline' 
  Plug 'vim-airline/vim-airline-themes'
 call plug#end()
@@ -48,30 +52,11 @@ colorscheme onedark
 source $HOME/.config/nvim/which-key.vim
 
 " AIRLINE OPTIONS
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'onedark'
-let g:airline#extensions#tabline#formatter = 'unique_tail' " Use reasonable tab names
-set showtabline=2 " Always show tabs
-set noshowmode   " We don't need to see -- INSERT -- anymore
+source $HOME/.config/nvim/airline.vim
 
 " CHADTREE OPTIONS
-nnoremap <leader>v <cmd>CHADopen<cr>
 let g:chadtree_settings = {'keymap.secondary': ["<m-enter>", "<middlemouse>"],'keymap.tertiary': ["<tab>", "<2-leftmouse>"]}
 autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "CHADTree") | q! | endif
 
-" COQ OPTIONS
-let g:coq_settings = { 'auto_start': 'shut-up','display.icons.spacing': 2 }
-
-" LSP OPTIONS
-lua << EOF
-local lspconfig = require('lspconfig')
-
--- Enable some language servers with the additional completion capabilities offered by coq_nvim
-local servers = {'pyright', 'jdtls'}
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({
-    -- on_attach = my_custom_on_attach,
-  }))
-end
-EOF
+" COQ AND LSP OPTIONS
+source $HOME/.config/nvim/coq.vim

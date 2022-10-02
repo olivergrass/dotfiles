@@ -17,6 +17,13 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:which_key_map = {}
+let g:which_key_map['/'] = [ ':Commentary'      , 'comment out selection' ]
+let g:which_key_map['v'] = [ ':CHADopen'        , 'open CHADtree' ]
+let g:which_key_map['S'] = [ ':Startify'        , 'start screen' ]
+let g:which_key_map['E'] = [ ':SSave'           , 'save session' ]
+let g:which_key_map['L'] = [ ':SLoad'           , 'load session' ]
+let g:which_key_map['t'] = [ ':Rg'              , 'search text' ]
+let g:which_key_map['f'] = [ ':Files'           , 'search files' ]
 let g:which_key_map['w'] = {
       \ 'name' : '+windows' ,
       \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -29,13 +36,40 @@ let g:which_key_map['w'] = {
       \ 'l' : ['<C-W>l'     , 'window-right']          ,
       \ 'k' : ['<C-W>k'     , 'window-up']             ,
       \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
-      \ 'J' : [':resize +5'  , 'expand-window-below']  ,
+      \ 'J' : [':resize +5' , 'expand-window-below']   ,
       \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
-      \ 'K' : [':resize -5'  , 'expand-window-up']     ,
+      \ 'K' : [':resize -5' , 'expand-window-up']      ,
       \ '=' : ['<C-W>='     , 'balance-window']        ,
       \ 's' : ['<C-W>s'     , 'split-window-below']    ,
       \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
       \ '?' : ['Windows'    , 'fzf-window']            ,
+      \ }
+let g:which_key_map.s = {
+      \ 'name' : '+search' ,
+      \ '/' : [':History/'     , 'history'],
+      \ ';' : [':Commands'     , 'commands'],
+      \ 'a' : [':Ag'           , 'text Ag'],
+      \ 'b' : [':BLines'       , 'current buffer'],
+      \ 'B' : [':Buffers'      , 'open buffers'],
+      \ 'c' : [':Commits'      , 'commits'],
+      \ 'C' : [':BCommits'     , 'buffer commits'],
+      \ 'f' : [':Files'        , 'files'],
+      \ 'g' : [':GFiles'       , 'git files'],
+      \ 'G' : [':GFiles?'      , 'modified git files'],
+      \ 'h' : [':History'      , 'file history'],
+      \ 'H' : [':History:'     , 'command history'],
+      \ 'l' : [':Lines'        , 'lines'] ,
+      \ 'm' : [':Marks'        , 'marks'] ,
+      \ 'M' : [':Maps'         , 'normal maps'] ,
+      \ 'p' : [':Helptags'     , 'help tags'] ,
+      \ 'P' : [':Tags'         , 'project tags'],
+      \ 's' : [':Snippets'     , 'snippets'],
+      \ 'S' : [':Colors'       , 'color schemes'],
+      \ 't' : [':Rg'           , 'text Rg'],
+      \ 'T' : [':BTags'        , 'buffer tags'],
+      \ 'w' : [':Windows'      , 'search windows'],
+      \ 'y' : [':Filetypes'    , 'file types'],
+      \ 'z' : [':FZF'          , 'FZF'],
       \ }
 
 " Register which key map
