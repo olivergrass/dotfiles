@@ -3,19 +3,12 @@ let g:coq_settings = { 'auto_start': 'shut-up','display.icons.spacing': 2 }
 
 " LSP OPTIONS
 lua << EOF
-local lspconfig = require('lspconfig')
+local tsconfig = require('nvim-treesitter.configs')
 
--- Enable some language servers with the additional completion capabilities offered by coq_nvim
-local servers = {'pyright', 'jdtls'}
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({
-    -- on_attach = my_custom_on_attach,
-  }))
-end
 
-require'nvim-treesitter.configs'.setup {
+tsconfig.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "python", "java", "javascript", "typescript", "markdown" },
+  ensure_installed = { },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -48,4 +41,24 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+})
+require("mason-lspconfig").setup()
+
+local lspconfig = require('lspconfig')
+-- Enable some language servers with the additional completion capabilities offered by coq_nvim
+local servers = {'pyright', 'jdtls'}
+for _, lsp in ipairs(servers) do
+  lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({
+    -- on_attach = my_custom_on_attach,
+  }))
+end
 EOF

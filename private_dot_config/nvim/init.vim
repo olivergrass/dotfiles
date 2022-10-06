@@ -1,64 +1,80 @@
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching
 set ignorecase              " case insensitive
-set mouse=v                 " middle-click paste with
 set hlsearch                " highlight search
 set incsearch               " incremental search
+set iskeyword+=-            " treat dash-seperated as one word
 set timeoutlen=300          " get which-key guide
+set updatetime=300          " faster completion
 set tabstop=4               " number of columns occupied by a tab
 set softtabstop=4           " see multiple spaces as tab-stops so <BS> does the right thing
 set expandtab               " converts tabs to white space
 set shiftwidth=4            " width for auto-indents
+set nowrap                  " display one line on ONE LINE
 set autoindent              " indent a new line the same amount as the line just typed
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
-filetype plugin indent on   " allow auto-indenting depending on file type
+filetype indent on          " allow auto-indenting depending on file type
+filetype plugin on          " allow plugins depending on file type
 syntax on                   " syntax highlighting
-set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
-filetype plugin on
+set mouse=v                 " middle-click paste with
+set mouse=a                 " enable mouse click
 set cursorline              " highlight current cursor-line
 set ttyfast                 " Speed up scrolling in Vim
-" set spell                   " enable spell check (may need to download language package)
+set scrolloff=8             " At least 8 lines above and below cursor
+set sidescrolloff=8         " - // -
 set noswapfile              " disable creating swap file
-set backupdir=~/.cache/vim  " Directory to store backup files.
+set nobackup                " Recommended by coc
+set nowritebackup           " Recommended by coc
 let mapleader=" "
+
+" auto source when writing to this
+au! BufWritePost $MYVIMRC source %
 
 " LOAD PLUGINS
 call plug#begin()
+ " -- Appearance
  Plug 'joshdick/onedark.vim'
- Plug 'mhinz/vim-startify'
- Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
- Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
- Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
- Plug 'neovim/nvim-lspconfig'
- Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
- Plug 'liuchengxu/vim-which-key'
- Plug 'tpope/vim-commentary'
- Plug 'tpope/vim-fugitive'
- Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
- Plug 'junegunn/fzf.vim'
  Plug 'vim-airline/vim-airline'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'edkolev/tmuxline.vim'
+ Plug 'goolord/alpha-nvim'
+ " -- Completion
+ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+ Plug 'neovim/nvim-lspconfig'
+ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+ Plug 'williamboman/mason.nvim'
+ Plug 'williamboman/mason-lspconfig.nvim'
+ " -- Navigation
+ Plug 'kyazdani42/nvim-web-devicons'
+ Plug 'kyazdani42/nvim-tree.lua'
+ Plug 'nvim-lua/plenary.nvim'
+ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+ Plug 'ahmedkhalf/project.nvim'
+ " -- Tools
+ Plug 'liuchengxu/vim-which-key'
+ Plug 'akinsho/toggleterm.nvim'
+ Plug 'tpope/vim-commentary'
+ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " TAB AND BUFFER SWITCHING
 nnoremap <expr> L len(gettabinfo()) > 1 ? 'gt' : ':bn<CR>'
 nnoremap <expr> H len(gettabinfo()) > 1 ? 'gT' : ':bN<CR>'
 
+" STOP PRESSING ESC
+inoremap jk <Esc>
+inoremap kj <Esc>
+
 " SET COLORSCHEME
 colorscheme onedark
 
-" WHICH-KEY OPTIONS
 source $HOME/.config/nvim/which-key.vim
-
-" AIRLINE OPTIONS
 source $HOME/.config/nvim/airline.vim
-
-" CHADTREE OPTIONS
-let g:chadtree_settings = {'keymap.secondary': ["<m-enter>", "<middlemouse>"],'keymap.tertiary': ["<tab>", "<2-leftmouse>"]}
-autocmd bufenter * if (winnr("$") == 1 && &buftype == "nofile" && &filetype == "CHADTree") | q! | endif
-
-" COQ AND LSP OPTIONS
+source $HOME/.config/nvim/alpha.vim
+source $HOME/.config/nvim/toggleterm.vim
+source $HOME/.config/nvim/nvim-tree.vim
+source $HOME/.config/nvim/projects.vim
 source $HOME/.config/nvim/coq.vim

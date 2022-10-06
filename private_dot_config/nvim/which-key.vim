@@ -12,18 +12,16 @@ highlight default link WhichKeyGroup     Identifier
 highlight default link WhichKeyDesc      Function
 
 " Hide status line
-autocmd! FileType which_key
-autocmd  FileType which_key set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" autocmd! FileType which_key
+" autocmd  FileType which_key set laststatus=0 noshowmode noruler
+  " \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 let g:which_key_map = {}
-let g:which_key_map['/'] = [ ':Commentary'      , 'comment' ]
-let g:which_key_map['v'] = [ ':CHADopen'        , 'open CHADtree' ]
-let g:which_key_map['S'] = [ ':Startify'        , 'start screen' ]
-let g:which_key_map['E'] = [ ':SSave'           , 'save session' ]
-let g:which_key_map['L'] = [ ':SLoad'           , 'load session' ]
-let g:which_key_map['t'] = [ ':Rg'              , 'search text' ]
-let g:which_key_map['f'] = [ ':Files'           , 'search files' ]
+let g:which_key_map['/'] = [ ':Commentary'                , 'comment' ]
+let g:which_key_map['v'] = [ ':NvimTreeToggle'            , 'open NvimTree' ]
+let g:which_key_map['S'] = [ ':Alpha'                     , 'start screen' ]
+let g:which_key_map['t'] = [ ':Telescope live_grep'       , 'search text' ]
+let g:which_key_map['f'] = [ ':Telescope find_files'      , 'search files' ]
 let g:which_key_map['w'] = {
       \ 'name' : '+windows' ,
       \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -39,34 +37,13 @@ let g:which_key_map['w'] = {
       \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
       \ 'K' : [':resize -5' , 'expand-window-up']      ,
       \ '=' : ['<C-W>='     , 'balance-window']        ,
-      \ '?' : ['Windows'    , 'fzf-window']            ,
       \ }
 let g:which_key_map.s = {
       \ 'name' : '+search'     ,
-      \ '/' : [':History/'     , 'history'],
-      \ ';' : [':Commands'     , 'commands'],
-      \ 'a' : [':Ag'           , 'text Ag'],
-      \ 'b' : [':BLines'       , 'current buffer'],
-      \ 'B' : [':Buffers'      , 'open buffers'],
-      \ 'c' : [':Commits'      , 'commits'],
-      \ 'C' : [':BCommits'     , 'buffer commits'],
-      \ 'f' : [':Files'        , 'files'],
-      \ 'g' : [':GFiles'       , 'git files'],
-      \ 'G' : [':GFiles?'      , 'modified git files'],
-      \ 'h' : [':History'      , 'file history'],
-      \ 'H' : [':History:'     , 'command history'],
-      \ 'l' : [':Lines'        , 'lines'] ,
-      \ 'm' : [':Marks'        , 'marks'] ,
-      \ 'M' : [':Maps'         , 'normal maps'] ,
-      \ 'p' : [':Helptags'     , 'help tags'] ,
-      \ 'P' : [':Tags'         , 'project tags'],
-      \ 's' : [':Snippets'     , 'snippets'],
-      \ 'S' : [':Colors'       , 'color schemes'],
-      \ 't' : [':Rg'           , 'text Rg'],
-      \ 'T' : [':BTags'        , 'buffer tags'],
-      \ 'w' : [':Windows'      , 'search windows'],
-      \ 'y' : [':Filetypes'    , 'file types'],
-      \ 'z' : [':FZF'          , 'FZF'],
+      \ 'b' : [':Telescope git_branches'        , 'Checkout branch']   ,
+      \ 'f' : [':Telescope find_files'          , 'Find File']         ,
+      \ 'r' : [':Telescope oldfiles'            , 'Open Recent File']  ,
+      \ 't' : [':Telescope live_grep'           , 'Text']              ,
       \ }
 let g:which_key_map.b = {
       \ 'name' : '+buffer' ,
@@ -78,7 +55,6 @@ let g:which_key_map.b = {
       \ 'l' : ['blast'     , 'last-buffer']     ,
       \ 'n' : ['bnext'     , 'next-buffer']     ,
       \ 'p' : ['bprevious' , 'previous-buffer'] ,
-      \ '?' : ['Buffers'   , 'fzf-buffer']      ,
       \ }
 let g:which_key_map.p = {
       \ 'name' : '+plug'                        ,
