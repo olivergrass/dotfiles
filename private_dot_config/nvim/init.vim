@@ -29,9 +29,6 @@ set nobackup                " Recommended by coc
 set nowritebackup           " Recommended by coc
 let mapleader=" "
 
-" auto source when writing to this
-au! BufWritePost $MYVIMRC source %
-
 " LOAD PLUGINS
 call plug#begin()
  " -- Appearance
@@ -41,18 +38,31 @@ call plug#begin()
  Plug 'edkolev/tmuxline.vim'
  Plug 'goolord/alpha-nvim'
  " -- Completion
- Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
- Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
- Plug 'neovim/nvim-lspconfig'
- Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
- Plug 'williamboman/mason.nvim'
- Plug 'williamboman/mason-lspconfig.nvim'
+ "  " Syntax highlight
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    " LSP Support
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
+    " Autocompletion
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-nvim-lua'
+    "  Snippets
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'rafamadriz/friendly-snippets'
+    " All-in-one integration
+    Plug 'VonHeikemen/lsp-zero.nvim'
  " -- Navigation
  Plug 'kyazdani42/nvim-web-devicons'
  Plug 'kyazdani42/nvim-tree.lua'
  Plug 'nvim-lua/plenary.nvim'
  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
  Plug 'ahmedkhalf/project.nvim'
+ Plug 'stevearc/dressing.nvim'
  " -- Tools
  Plug 'liuchengxu/vim-which-key'
  Plug 'akinsho/toggleterm.nvim'
@@ -69,6 +79,7 @@ inoremap jk <Esc>
 inoremap kj <Esc>
 
 " SET COLORSCHEME
+set termguicolors
 colorscheme onedark
 
 source $HOME/.config/nvim/which-key.vim
@@ -77,4 +88,7 @@ source $HOME/.config/nvim/alpha.vim
 source $HOME/.config/nvim/toggleterm.vim
 source $HOME/.config/nvim/nvim-tree.vim
 source $HOME/.config/nvim/projects.vim
-source $HOME/.config/nvim/coq.vim
+source $HOME/.config/nvim/telescope.vim
+source $HOME/.config/nvim/zero.vim
+" source $HOME/.config/nvim/coq.vim
+
