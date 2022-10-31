@@ -1,5 +1,8 @@
+local Log = require('utils.log')
+
 local status_ok, nvimtree = pcall(require, 'nvim-tree')
 if not status_ok then
+    Log:error('Failed to load nvim-tree')
     return
 end
 

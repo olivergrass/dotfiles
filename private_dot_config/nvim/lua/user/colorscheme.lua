@@ -1,2 +1,2 @@
-vim.cmd('colorscheme o-onedark')
+vim.cmd('colorscheme o-wick')
 

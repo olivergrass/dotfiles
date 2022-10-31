@@ -1,4 +1,6 @@
 local alpha = require('alpha')
+local banners = require('tables.banners')
+local icons = require('tables.icons')
 
 local date_gen = assert(io.popen('echo "$(date +%a) $(date +%d) $(date +%b)" | tr -d "\n"'))
 local date = date_gen:read('*a')
@@ -18,8 +20,8 @@ local function button(sc, txt, keybind)
         cursor = 0,
         width = 44,
         align_shortcut = 'right',
-        hl_shortcut = 'AlphaShortcuts',
-        hl = 'AlphaHeader',
+        hl_shortcut = 'AlphaShortcut',
+        hl = 'AlphaButton',
     }
 
     if keybind then
@@ -38,7 +40,6 @@ local function button(sc, txt, keybind)
 end
 
 -- Get banner to display in header
-local banners = require('tables.banners')
 local function randomBanner()
     local keys = {}
     for k, _ in pairs(banners) do
@@ -66,7 +67,7 @@ local date_section = {
     type = 'text',
     val = function()
         if is_win_tall() then
-            return '┌─   Today is ' .. date .. ' ─┐'
+            return '┌─ ' .. icons.ui.Calendar .. '  Today is ' .. date .. ' ─┐'
         else
             return ' '
         end
@@ -81,7 +82,7 @@ local plugin_section = {
     type = 'text',
     val = function()
         if is_win_tall() then
-            return '└─   ' .. vim.tbl_count(packer_plugins) .. ' plugins in total ─┘'
+            return '└─ ' .. icons.ui.Package .. '  ' .. vim.tbl_count(packer_plugins) .. ' plugins in total ─┘'
         else
             return ' '
         end
@@ -95,12 +96,12 @@ local plugin_section = {
 local buttons = {
     type = 'group',
     val = {
-        button('e', '  > New file', ':ene <BAR> startinsert <CR>'),
-        button('f', '  > Find file', ':cd $HOME | Telescope find_files<CR>'),
-        button('r', '  > Recent', ':Telescope oldfiles<CR>'),
-        button('p', '  > Projects', ':Telescope projects<CR>'),
-        button('s', '  > Settings', ':cd $HOME/.config/nvim | Telescope find_files<CR>'),
-        button('q', '  > Quit NVIM', ':qa<CR>'),
+        button('e', icons.ui.NewFile  .. '  > New file',  ':ene | startinsert <CR>'),
+        button('f', icons.ui.FindFile .. '  > Find file', ':cd $HOME | Telescope find_files<CR>'),
+        button('r', icons.ui.History  .. '  > Recent',    ':Telescope oldfiles<CR>'),
+        button('p', icons.ui.Projects .. '  > Projects',  ':Telescope projects<CR>'),
+        button('s', icons.ui.Gear     .. '  > Settings',  ':cd $HOME/.config/nvim | Telescope find_files<CR>'),
+        button('q', icons.ui.SignOut  .. '  > Quit NVIM', ':qa<CR>'),
     },
     opts = {
         spacing = 1,

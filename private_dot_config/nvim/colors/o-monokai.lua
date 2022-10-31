@@ -1,6 +1,6 @@
 vim.g.colors_name = "o-monokai"
 
-require("config.colorscheme").setup {
+require("utils.colorscheme").setup {
     base00 = "#272822",
     base01 = "#383830",
     base02 = "#49483e",
@@ -17,4 +17,8 @@ require("config.colorscheme").setup {
     base0D = "#66d9ef",
     base0E = "#ae81ff",
     base0F = "#cc6633",
+    red    = "#e06c75",
+    yellow = "#f2d479",
+    green  = "#98c379",
+    cyan   = "#78c4ce",
 }

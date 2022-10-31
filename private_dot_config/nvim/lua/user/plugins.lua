@@ -64,11 +64,26 @@ packer.startup(function(use)
         end,
     }
     use { 'stevearc/dressing.nvim' }
+    use {
+        'xiyaowong/nvim-transparent',
+        config = function()
+            require('transparent').setup{
+                enable = false,
+            }
+        end,
+    }
 
     -- Colorschemes
     use { 'folke/tokyonight.nvim' }
     use { 'joshdick/onedark.vim' }
     use { 'lunarvim/darkplus.nvim' }
+    use {
+        "catppuccin/nvim",
+        as = "catppuccin",
+        config = function()
+            -- require('user.config.catppuccin')
+        end,
+    }
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -118,7 +133,6 @@ packer.startup(function(use)
             require('user.config.nvim-tree')
         end,
         cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
-        -- ft = 'alpha',
     }
     use {
         'nvim-telescope/telescope.nvim',
@@ -137,8 +151,15 @@ packer.startup(function(use)
     -- Treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+        run = function()
+            require('nvim-treesitter.install').update({ with_sync = true })
+        end,
+        config = function()
+            require('user.config.treesitter')
+        end,
     }
+    use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+    use { 'nvim-treesitter/playground' }
 
     -- Tools
     use {
@@ -179,7 +200,21 @@ packer.startup(function(use)
             require('user.config.neoscroll')
         end,
     }
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            vim.notify = require('notify')
+        end,
+    }
+    use {
+        'ggandor/leap.nvim',
+        config = function()
+            require('leap').add_default_mappings()
+        end,
+    }
 
+    -- Language Specific
+    use { 'simrat39/rust-tools.nvim' }
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

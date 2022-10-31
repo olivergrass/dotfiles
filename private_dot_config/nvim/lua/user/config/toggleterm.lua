@@ -1,4 +1,12 @@
-require("toggleterm").setup{
+local Log = require('utils.log')
+
+local status_ok, toggleterm = pcall(require, 'toggleterm')
+if not status_ok then
+    Log:error('Failed to load toggleterm')
+    return
+end
+
+toggleterm.setup{
   -- size can be a number or function which is passed the current terminal
   size = function(term)
     if term.direction == "horizontal" then
@@ -20,6 +28,7 @@ require("toggleterm").setup{
   close_on_exit = true, -- close the terminal window when the process exits
 }
 
+-- Close nvim if terminal is the last buffer
 vim.api.nvim_create_autocmd("BufEnter", {
   nested = true,
   callback = function()
@@ -29,3 +38,30 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end
 })
 
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit = Terminal:new{
+    cmd = 'lazygit',
+    dir = 'git_dir',
+    hidden = true,
+    direction = 'float',
+    on_open = function(_)
+        vim.cmd('startinsert!')
+    end,
+    on_close = function(_) end,
+}
+
+function _GITDIFF_TOGGLE()
+    local cmd = 'git diff HEAD:' .. vim.fn.expand('%') .. ' ' .. vim.fn.expand('%')
+    Log:info(cmd)
+    local gitdiff = Terminal:new{
+        cmd = cmd,
+        hidden = true,
+        direction = 'float',
+        close_on_exit = false,
+    }
+    gitdiff:toggle()
+end
+
+function _LAZYGIT_TOGGLE()
+    lazygit:toggle()
+end

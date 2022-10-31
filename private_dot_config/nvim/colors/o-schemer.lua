@@ -1,6 +1,6 @@
 vim.g.colors_name = "o-schemer"
 
-require("config.colorscheme").setup {
+require("utils.colorscheme").setup {
     base00 = "#16161D",
     base01 = "#3e4451",
     base02 = "#2c313c",
@@ -17,4 +17,8 @@ require("config.colorscheme").setup {
     base0D = "#0184bc",
     base0E = "#c678dd",
     base0F = "#a06949",
+    red    = "#e06c75",
+    yellow = "#e5c07b",
+    green  = "#98c379",
+    cyan   = "#56b6c2",
 }

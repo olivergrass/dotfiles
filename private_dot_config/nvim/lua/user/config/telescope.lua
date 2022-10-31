@@ -1,5 +1,9 @@
+local Log = require('utils.log')
+local icons = require('tables.icons')
+
 local status_ok, telescope = pcall(require, 'telescope')
 if not status_ok then
+    Log:error('Failed to load telescope')
     return
 end
 
@@ -8,24 +12,24 @@ telescope.setup {
         -- Default configuration for telescope goes here:
         -- config_key = value,
         vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
         },
-        prompt_prefix = "   ",
-        selection_caret = "  ",
-        entry_prefix = "  ",
-        initial_mode = "insert",
-        selection_strategy = "reset",
-        sorting_strategy = "ascending",
-        layout_strategy = "horizontal",
+        prompt_prefix = icons.ui.Search .. ' ',
+        selection_caret = '  ',
+        entry_prefix = '  ',
+        initial_mode = 'insert',
+        selection_strategy = 'reset',
+        sorting_strategy = 'ascending',
+        layout_strategy = 'horizontal',
         layout_config = {
             horizontal = {
-                prompt_position = "top",
+                prompt_position = 'top',
                 preview_width = 0.55,
                 results_width = 0.8,
             },
@@ -41,7 +45,7 @@ telescope.setup {
                 -- map actions.which_key to <C-h> (default: <C-/>)
                 -- actions.which_key shows the mappings for your picker,
                 -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-                ["<C-h>"] = "which_key"
+                ['<C-h>'] = 'which_key'
             }
         },
     },
@@ -65,3 +69,8 @@ telescope.setup {
         -- please take a look at the readme of the extension you want to configure
     }
 }
+
+telescope.load_extension('projects')
+telescope.load_extension('notify')
+telescope.extensions.notify.notify()
+

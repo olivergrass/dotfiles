@@ -1,5 +1,8 @@
+local Log = require('utils.log')
+
 local status_ok, gitsigns = pcall(require, 'gitsigns')
 if not status_ok then
+    Log:error('Failed to load gitsigns')
     return
 end
 

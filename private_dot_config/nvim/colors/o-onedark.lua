@@ -1,6 +1,6 @@
 vim.g.colors_name = "o-onedark"
 
-require("config.colorscheme").setup {
+require("utils.colorscheme").setup {
     base00 = "#1e222a",
     base01 = "#353b45",
     base02 = "#3e4451",
@@ -17,4 +17,8 @@ require("config.colorscheme").setup {
     base0D = "#61afef",
     base0E = "#c678dd",
     base0F = "#be5046",
+    red    = "#e06c75",
+    yellow = "#f2d479",
+    green  = "#98c379",
+    cyan   = "#78c4ce",
 }

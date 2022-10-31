@@ -1,31 +1,3 @@
-local kind_icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "ﴯ",
-    Interface = "",
-    Module = "",
-    Property = "ﰠ",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-    Event = "",
-    Operator = "",
-    TypeParameter = ""
-}
-
 require('mason.settings').set {
     ui = {
         border = 'rounded',
@@ -49,9 +21,12 @@ lsp.configure('sumneko_lua', {
     },
 })
 
+local rust_lsp = lsp.build_options('rust_analyzer', {})
+
 local luasnip = require('luasnip')
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
+local icons = require('tables.icons')
 
 lsp.setup_nvim_cmp({
     mapping = lsp.defaults.cmp_mappings({
@@ -77,7 +52,7 @@ lsp.setup_nvim_cmp({
     formatting = {
         format = function(entry, vim_item)
             -- icons
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- concat icon and text
+            vim_item.kind = string.format('%s %s', icons.kind[vim_item.kind], vim_item.kind) -- concat icon and text
             -- disable source text
             vim_item.menu = ({
                 buffer = '',
@@ -95,15 +70,19 @@ vim.diagnostic.config({
     virtual_lines = false,
 })
 
+vim.cmd([[
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
+
 lsp.setup()
 
-require 'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
+require('rust-tools').setup({
+    tools = {
+        inlay_hints = {
+            auto = true,
+            only_current_line = true,
+            show_parameter_hints = true,
+        },
     },
-}
+    server = rust_lsp,
+})

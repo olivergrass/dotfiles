@@ -1,5 +1,8 @@
+local Log = require('utils.log')
+
 local status_ok, which_key = pcall(require, 'which-key')
 if not status_ok then
+    Log:error('Failed to load which-key')
     return
 end
 
@@ -96,7 +99,6 @@ local mappings = {
     ["f"] = { "<cmd>Telescope find_files<CR>", "Find files", },
     ["F"] = { "<cmd>Telescope live_grep<CR>", "Find Text" },
     ["P"] = { "<cmd>Telescope projects<CR>", "Projects" },
-    ["N"] = { "<cmd>lua require('base46').toggle_theme()<CR>", "Color" },
 
     p = {
         name = "Packer",
@@ -109,7 +111,10 @@ local mappings = {
 
     g = {
         name = "Git",
-        g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+        g = {
+            function ()
+                _LAZYGIT_TOGGLE()
+            end, "Lazygit" },
         j = { "<cmd>lua require 'gitsigns'.next_hunk()<CR>", "Next Hunk" },
         k = { "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", "Prev Hunk" },
         l = { "<cmd>lua require 'gitsigns'.blame_line()<CR>", "Blame" },
@@ -121,7 +126,10 @@ local mappings = {
         o = { "<cmd>Telescope git_status<CR>", "Open changed file" },
         b = { "<cmd>Telescope git_branches<CR>", "Checkout branch" },
         c = { "<cmd>Telescope git_commits<CR>", "Checkout commit" },
-        d = { "<cmd>Gitsigns diffthis HEAD<CR>", "Diff", },
+        d = {
+            function ()
+                _GITDIFF_TOGGLE()
+            end, "Diff Delta", },
     },
 
     l = {
@@ -160,6 +168,7 @@ local mappings = {
         R = { "<cmd>Telescope registers<CR>", "Registers" },
         k = { "<cmd>Telescope keymaps<CR>", "Keymaps" },
         C = { "<cmd>Telescope commands<CR>", "Commands" },
+        d = { "<cmd>Telescope diagnostics<CR>", "Diagnostics" },
     },
 
     t = {
