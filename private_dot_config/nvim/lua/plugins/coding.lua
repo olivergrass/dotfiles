@@ -65,12 +65,15 @@ return {
                 },
                 mapping = {
                     ["<Tab>"] = cmp.mapping(function(fallback)
+                        local copilot_keys = vim.fn['copilot#Accept']()
                         if cmp.visible() then
                             cmp.select_next_item()
                             -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
                             -- they way you will only jump inside the snippet region
                         elseif luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
+                        elseif copilot_keys ~= '' and type(copilot_keys) == 'string' then
+                            vim.api.nvim_feedkeys(copilot_keys, 'i', true)
                         elseif has_words_before() then
                             cmp.complete()
                         else
@@ -100,15 +103,6 @@ return {
                     },
                 }
             })
-        end,
-    },
-
-    -- Auto pairs
-    {
-        "echasnovski/mini.pairs",
-        event = "VeryLazy",
-        config = function(_, opts)
-            require("mini.pairs").setup(opts)
         end,
     },
 }

@@ -21,7 +21,6 @@ bufferline.setup{
         indicator = { style = "none" },
         separator_style = { "", "" },
         always_show_bufferline = false,
-        show_close_icon = false,
     }
 }
 

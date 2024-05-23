@@ -1,26 +1,7 @@
 return {
+    { "kyazdani42/nvim-web-devicons" },
     { "stevearc/dressing.nvim" },
     { "xiyaowong/nvim-transparent" },
-    {
-        "echasnovski/mini.indentscope",
-        version = false,
-        event = { "BufReadPre", "BufNewFile" },
-        opts = {
-            symbol = "│",
-            options = { try_as_border = true },
-        },
-        init = function()
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = { "help", "alpha", "dashboard", "neo-tree", "nvim-tree", "Trouble", "lazy", "mason" },
-                callback = function()
-                    vim.b.miniindentscope_disable = true
-                end,
-            })
-        end,
-        config = function(_, opts)
-            require("mini.indentscope").setup(opts)
-        end,
-    },
     {
         "folke/noice.nvim",
         config = function()
@@ -47,5 +28,39 @@ return {
             "muniftanjim/nui.nvim",
             "rcarriga/nvim-notify",
         },
+    },
+    {
+        "norcalli/nvim-colorizer.lua",
+        cmd = "ColorizerToggle",
+        config = function()
+            require("colorizer").setup()
+        end,
+    },
+    {
+        "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+        end,
+    },
+    {
+        "akinsho/bufferline.nvim",
+        config = function()
+            require("user.config.bufferline")
+        end,
+    },
+    {
+        "nvim-lualine/lualine.nvim",
+        config = function()
+            require("user.config.lualine")
+        end,
+        dependencies = {
+            "folke/noice.nvim",
+        },
+    },
+    {
+        "goolord/alpha-nvim",
+        config = function()
+            require("user.config.alpha")
+        end,
     },
 }

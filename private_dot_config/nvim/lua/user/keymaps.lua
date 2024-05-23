@@ -16,6 +16,9 @@ vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { silent = true, desc = "Move u
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
 vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })
 
+-- Disable default behaviour to help surrouind
+vim.keymap.set("n", "s", "<NOP>")
+
 -- Stop pressing ESC
 vim.keymap.set("i", "jk", "<ESC>", { noremap = true })
 vim.keymap.set("i", "kj", "<ESC>", { noremap = true })

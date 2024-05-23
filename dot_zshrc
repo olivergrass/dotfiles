@@ -1,13 +1,3 @@
-# ------------------- oh-my-zsh ---------------------------
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
-# SET PATH IN .ZSHENV
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -16,7 +6,7 @@ ZSH_THEME=""
 
 # Standard plugins can be found in $ZSH/plugins/
 plugins=(
-    docker
+    z
     command-not-found
     git
     nvm
@@ -24,37 +14,35 @@ plugins=(
     zoxide
 )
 
+# must be sourced after plugins
 source $ZSH/oh-my-zsh.sh
 
-
-
-# User configuration
 export COLORTERM="truecolor"
-# Sets default editor
 export EDITOR="vim -f"
 export VISUAL="nvim"
-
-# Sets default pager
 export PAGER="bat -p"
-
-# Sets bat as default pager for man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# Set personal aliases
 alias cd="z"
 alias vi="nvim"
 alias ls="exa"
 alias ll="exa -1lbF --git --icons" # long list
 alias la="exa -1lbhHUma --time-style=long-iso --git --color-scale --icons" # all list
 alias lt="exa --tree --level=2" # tree
-
+alias help="run-help"
 alias code='"/mnt/c/Users/olleg/AppData/Local/Programs/Microsoft VS Code/Code.exe"'
+
+# Man page with examples
+function tldr() {
+    command tldr -m "$1" | glow -p -;
+}
+
+function nvim_man() {
+    nvim "+Man $* | only";
+}
 
 # Setup thefuck
 eval $(thefuck --alias)
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ===============================
 # 		       nnn
@@ -133,14 +121,18 @@ function nvims() {
   fi
   NVIM_APPNAME=$config nvim $@
 }
-
-bindkey -s ^a "nvims\n"
+# bindkey -s ^a "nvims\n"
 
 # Set X11 as X Server
 export DISPLAY=:0
 
 # Starship
 eval "$(starship init zsh)"
+
+# NPM version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

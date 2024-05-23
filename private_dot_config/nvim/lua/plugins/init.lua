@@ -1,61 +1,35 @@
 return {
-    -- Appearance
     {
-        "akinsho/bufferline.nvim",
+        "karb94/neoscroll.nvim",
         config = function()
-            require("user.config.bufferline")
+            require("user.config.neoscroll")
         end,
     },
     {
-        "nvim-lualine/lualine.nvim",
-        config = function()
-            require("user.config.lualine")
-        end,
-        dependencies = {
-            "folke/noice.nvim",
-        },
+        "otavioschwanck/arrow.nvim",
+        opts = {
+            show_icons = true,
+            leader_key = ';' -- Recommended to be a single key
+        }
     },
     {
-        "goolord/alpha-nvim",
-        config = function()
-            require("user.config.alpha")
-        end,
+      "folke/flash.nvim",
+      event = "VeryLazy",
+      opts = {
+          jump = {
+              autojump = false,
+          },
+      },
+      keys = {
+        { "<CR>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+        { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+        { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+        { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+        { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+      },
     },
-
-    -- Colorschemes
-
-    -- Autocompletion
-
-    -- Navigation
-    { "kyazdani42/nvim-web-devicons" },
-    {
-        "kyazdani42/nvim-tree.lua",
-        config = function()
-            require("user.config.nvim-tree")
-        end,
-        cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    },
-
-    -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = function()
-            require("nvim-treesitter.install").update({ with_sync = true })
-        end,
-        config = function()
-            require("user.config.treesitter")
-        end,
-    },
-    { "nvim-treesitter/nvim-treesitter-textobjects" },
-    { "nvim-treesitter/playground" },
 
     -- Tools
-    {
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end
-    },
     {
         "lewis6991/gitsigns.nvim",
         config = function()
@@ -73,31 +47,6 @@ return {
         "akinsho/toggleterm.nvim",
         config = function()
             require("user.config.toggleterm")
-        end,
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-        cmd = "ColorizerToggle",
-        config = function()
-            require("colorizer").setup()
-        end,
-    },
-    {
-        "karb94/neoscroll.nvim",
-        config = function()
-            require("user.config.neoscroll")
-        end,
-    },
-    {
-        "rcarriga/nvim-notify",
-        config = function()
-            vim.notify = require("notify")
-        end,
-    },
-    {
-        "ggandor/leap.nvim",
-        config = function()
-            require("leap").add_default_mappings()
         end,
     },
 

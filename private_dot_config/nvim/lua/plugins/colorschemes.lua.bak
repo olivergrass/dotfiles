@@ -1,9 +1,0 @@
-return {
-    { 'folke/tokyonight.nvim' },
-    { 'joshdick/onedark.vim' },
-    { 'lunarvim/darkplus.nvim' },
-    {
-        "catppuccin/nvim",
-        as = "catppuccin",
-    },
-}

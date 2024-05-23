@@ -88,10 +88,14 @@ local opts = {
 }
 
 local mappings = {
-    ["/"] = { "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", "Comment" },
+    -- ["/"] = { "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", "Comment" },
     ["a"] = { "<cmd>Alpha<CR>", "Alpha" },
     ["b"] = { "<cmd>Telescope buffers<CR>", "Buffers", },
-    ["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
+    -- ["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
+    ["e"] = {
+        function()
+            if not MiniFiles.close() then MiniFiles.open(vim.api.nvim_buf_get_name(0)) end
+    end , "Explorer" },
     ["w"] = { "<cmd>w!<CR>", "Save" },
     ["q"] = { "<cmd>q!<CR>", "Quit" },
     ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
@@ -100,15 +104,6 @@ local mappings = {
     ["F"] = { "<cmd>Telescope live_grep<CR>", "Find Text" },
     ["L"] = { "<cmd>Lazy<CR>", "Lazy" },
     -- ["P"] = { "<cmd>Telescope projects<CR>", "Projects" },
-
-    -- p = {
-    --     name = "Packer",
-    --     c = { "<cmd>PackerCompile<CR>", "Compile" },
-    --     i = { "<cmd>PackerInstall<CR>", "Install" },
-    --     s = { "<cmd>PackerSync<CR>", "Sync" },
-    --     S = { "<cmd>PackerStatus<CR>", "Status" },
-    --     u = { "<cmd>PackerUpdate<CR>", "Update" },
-    -- },
 
     g = {
         name = "Git",
@@ -187,7 +182,7 @@ local vopts = {
     nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-    ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle.linewise(vim.fn.visualmode())<CR>", "Comment" },
+    -- ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle.linewise(vim.fn.visualmode())<CR>", "Comment" },
 }
 
 which_key.setup(setup)
