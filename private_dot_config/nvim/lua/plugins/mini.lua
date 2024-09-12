@@ -26,6 +26,23 @@ return {
         config = function(_, opts)
             require("mini.files").setup(opts)
         end,
+        keys = {
+            { "<leader>e", function() MiniFiles.open(vim.api.nvim_buf_get_name(0)) end, desc = "File tree" },
+        }
+    },
+    {
+        "echasnovski/mini.icons",
+        opts = {},
+        lazy = true,
+        specs = {
+            { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+        },
+        init = function()
+            package.preload["nvim-web-devicons"] = function()
+                require("mini.icons").mock_nvim_web_devicons()
+                return package.loaded["nvim-web-devicons"]
+            end
+        end,
     },
     {
         "echasnovski/mini.comment",

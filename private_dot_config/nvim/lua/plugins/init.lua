@@ -39,8 +39,23 @@ return {
     { "famiu/bufdelete.nvim" },
     {
         "folke/which-key.nvim",
-        config = function()
-            require("user.config.whichkey")
+        event = "VeryLazy",
+        opts_extend = { "spec" },
+        opts = {
+            default = {},
+            spec = {
+                {
+                    mode = { "n", "v" },
+                    { "<leader>g", "Git" },
+                    { "<leader>l", "LSP" },
+                    { "<leader>s", "Search" },
+                    { "<leader>t", "Terminal" },
+                },
+            },
+        },
+        config = function(_, opts)
+            local wk = require("which-key")
+            wk.setup(opts)
         end,
     },
     {

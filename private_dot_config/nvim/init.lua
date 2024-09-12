@@ -31,3 +31,5 @@ for _, mod in ipairs(modules) do
         error(("Error loading %s...\n\n%s"):format(mod, err))
     end
 end
+
+vim.cmd("autocmd BufNewFile,BufRead *.bend setfiletype python")
