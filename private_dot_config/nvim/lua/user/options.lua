@@ -14,6 +14,7 @@ vim.opt.iskeyword:append("-") -- Treat dash-separated words as one word
 vim.opt.fillchars = { eob = " " } -- Stop drawing tilde"s for blank lines
 vim.cmd("autocmd BufEnter * set formatoptions-=cro") -- Stop automatic newline continuation of comments
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+vim.cmd("autocmd TermOpen * startinsert") -- Automatically start insert mode in terminal buffers
 
 -- Enable switching between underline and inline diagnostics
 vim.diagnostic.config({
@@ -22,9 +23,7 @@ vim.diagnostic.config({
 })
 
 -- Open debug info on "hover"
-vim.cmd([[
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]])
+vim.cmd([[ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false }) ]])
 
 local options = {
     mouse = "a",                                  -- Enable mouse
@@ -55,6 +54,7 @@ local options = {
     writebackup = false,                          -- Don"t clash between programs
     cursorline = true,                            -- Highlight the current line
     cmdheight = 0,                                -- Experimental: remove command section
+    autochdir = false,                            -- Change directory to the file being edited
 }
 
 for k, v in pairs(options) do

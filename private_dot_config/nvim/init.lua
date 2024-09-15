@@ -16,10 +16,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Install your plugins here
-require("lazy").setup("plugins")
+require("lazy").setup({
+    spec = { { import = "plugins" } },
+    install = { colorscheme = { "catppuccin", "habamax" } },
+})
 
 local modules = {
-    "user.disabled",
+    -- "user.disabled",
     "user.options",
     "user.keymaps",
     "user.colorscheme",

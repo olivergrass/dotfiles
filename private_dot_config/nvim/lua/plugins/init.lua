@@ -7,6 +7,7 @@ return {
     },
     {
         "otavioschwanck/arrow.nvim",
+        keys = { ";" },
         opts = {
             show_icons = true,
             leader_key = ';' -- Recommended to be a single key
@@ -32,14 +33,18 @@ return {
     -- Tools
     {
         "lewis6991/gitsigns.nvim",
+        enabled = false,
         config = function()
             require("user.config.gitsigns")
         end,
     },
-    { "famiu/bufdelete.nvim" },
+    {
+        "famiu/bufdelete.nvim",
+    },
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        enabled = false,
         opts_extend = { "spec" },
         opts = {
             default = {},

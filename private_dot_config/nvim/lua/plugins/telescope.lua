@@ -4,7 +4,7 @@ return {
         "nvim-pack/nvim-spectre",
         -- stylua: ignore
         keys = {
-            { "<leader>ss", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+            { "<leader>fs", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
         },
     },
 
@@ -19,6 +19,10 @@ return {
             -- config = function()
             --     require("user.config.projects")
             -- end,
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                build = "make",
+            }
         },
         config = function()
             require("telescope").setup({
@@ -28,6 +32,7 @@ return {
                     },
                 },
             })
+            require("telescope").load_extension("fzf")
         end,
     },
 }

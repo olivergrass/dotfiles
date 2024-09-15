@@ -10,6 +10,13 @@ return {
         end,
     },
 
+    {
+        "Wansmer/treesj",
+        keys = {
+            { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+        },
+        opts = { use_default_keymaps = false, max_join_length = 150 },
+    },
 
     -- Auto completion
     {
@@ -45,55 +52,51 @@ return {
                     { name = "path" },
                 }),
                 formatting = {
-                    format = function(_, item)
+                    format = function(entry, item)
                         local icons = require("tables.icons")
-                        if icons[item.kind] then
-                            item.kind = icons[item.kind] .. item.kind
-                        end
+                        -- icons
+                        item.kind = string.format("[%s] %s", icons.kind[item.kind], item.kind)
+                        -- disable source text
+                        item.menu = ({
+                            nvim_lsp = "LSP",
+                            luasnip = "LuaSnip",
+                            buffer = "Buffer",
+                            path = "Path",
+                        })[entry.source.name]
                         return item
-                        -- -- icons
-                        -- vim_item.kind = string.format("%s %s", icons.kind[vim_item.kind], vim_item.kind) -- concat icon and text
-                        -- -- disable source text
-                        -- vim_item.menu = ({
-                        --     buffer = "",
-                        --     nvim_lsp = "",
-                        --     luasnip = "",
-                        --     nvim_lua = "",
-                        -- })[entry.source.name]
-                        -- return vim_item
                     end,
                 },
                 mapping = {
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif vim.b._copilot_suggestion ~= nil then
-                            vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
-                        elseif has_words_before() then
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
+                    -- ["<Tab>"] = cmp.mapping(function(fallback)
+                    --     if cmp.visible() then
+                    --         cmp.select_next_item()
+                    --     elseif luasnip.expand_or_jumpable() then
+                    --         luasnip.expand_or_jump()
+                    --     elseif vim.b._copilot_suggestion ~= nil then
+                    --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
+                    --     elseif has_words_before() then
+                    --         cmp.complete()
+                    --     else
+                    --         fallback()
+                    --     end
+                    -- end, { "i", "s" }),
+                    --
+                    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    --     if cmp.visible() then
+                    --         cmp.select_prev_item()
+                    --     elseif luasnip.jumpable(-1) then
+                    --         luasnip.jump(-1)
+                    --     else
+                    --         fallback()
+                    --     end
+                    -- end, { "i", "s" }),
 
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    -- ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                    -- ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.close(),
+                    ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = false,

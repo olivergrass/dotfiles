@@ -6,9 +6,21 @@ local date_gen = assert(io.popen('echo "$(date +%a) $(date +%d) $(date +%b)" | t
 local date = date_gen:read("*a")
 date_gen:close()
 
--- Don"t display tall elements in a short window
-local function is_win_tall()
-    return vim.fn.winheight(0) > 30
+local function banner_height(banner)
+    return vim.tbl_count(banner)
+end
+
+local function window_height()
+    return vim.fn.winheight(0)
+end
+
+-- Calculate total height of UI elements excluding banner
+local function non_banner_height()
+    local button_height = 6*2 -- since each button has spacing too
+    local date_height = 1
+    local plugin_height = 1
+    local padding_height = 2*2 -- we pad twice
+    return button_height + date_height + plugin_height + padding_height
 end
 
 -- Create a single button
@@ -40,19 +52,23 @@ local function button(sc, txt, keybind)
 end
 
 -- Get banner to display in header
-local function randomBanner()
-    local keys = {}
-    for k, _ in pairs(banners) do
-        table.insert(keys, k)
+local function get_fitting_banner()
+    local max_banner_height = window_height() - non_banner_height()
+
+    local fitting_banners = {}
+    for _, banner in pairs(banners) do
+        if banner_height(banner) <= max_banner_height then
+            table.insert(fitting_banners, banner)
+        end
     end
 
-    if is_win_tall() then
-        return banners[keys[math.random(#keys)]]
+    if #fitting_banners > 0 then
+        return fitting_banners[math.random(#fitting_banners)]
     else
         return banners["neobold"]
     end
 end
-local banner = randomBanner()
+local banner = get_fitting_banner()
 
 local heading = {
     type = "text",
@@ -66,11 +82,7 @@ local heading = {
 local date_section = {
     type = "text",
     val = function()
-        if is_win_tall() then
-            return "┌─ " .. icons.ui.Calendar .. "  Today is " .. date .. " ─┐"
-        else
-            return " "
-        end
+        return "┌─ " .. icons.ui.Calendar .. "  Today is " .. date .. " ─┐"
     end,
     opts = {
         position = "center",
@@ -83,11 +95,7 @@ local stats = require("lazy").stats()
 local plugin_section = {
     type = "text",
     val = function()
-        if is_win_tall() then
-            return "└─ " .. icons.ui.Package .. "  " .. stats.count .. " plugins in total ─┘"
-        else
-            return " "
-        end
+        return "└─ " .. icons.ui.Package .. "  " .. stats.count .. " plugins in total ─┘"
     end,
     opts = {
         position = "center",
@@ -111,12 +119,12 @@ local buttons = {
 }
 
 -- Dynamic padding
-local headerPadding = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) / 2) - vim.tbl_count(banner) - 2}
-local dynamic_padding = (is_win_tall() and 2 or 0)
+local header_padding = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) / 2) - banner_height(banner) - 2}
+local dynamic_padding = 2
 
 alpha.setup {
     layout = {
-        { type = "padding", val = headerPadding },
+        { type = "padding", val = header_padding },
         heading,
         { type = "padding", val = dynamic_padding },
         date_section,
