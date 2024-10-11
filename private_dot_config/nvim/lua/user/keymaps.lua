@@ -9,25 +9,14 @@ local split_sensibly = function()
 end
 
 local format_buffer = function()
-    if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
-        vim.cmd('normal gg=G<C-o>')
-    else
+    if vim.tbl_isempty(vim.lsp.get_clients()) then
         vim.lsp.buf.format()
-    end
-end
-
-local rename_symbol = function()
-    if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
-        -- vim.lsp.buf.rename()
-        vim.cmd('grep'..vim.fn.expand('<cword>')..'./')
     else
-        vim.cmd('grep'..vim.fn.expand('<cword>')..'./')
+        vim.cmd('normal gg=G<C-o>')
     end
 end
 
 -- Enable buffer switching
-map("n", "L", ":bn<CR>", { noremap = true, silent = true, desc = "Next Buffer" })
-map("n", "H", ":bN<CR>", { noremap = true, silent = true, desc = "Prev Buffer" })
 map("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true, desc = "Next Buffer" })
 map("n", "<S-TAB>", ":bN<CR>", { noremap = true, silent = true, desc = "Prev Buffer" })
 
@@ -81,6 +70,7 @@ map(
     { noremap = true, silent = true, desc = "Buffers" }
 )
 map("n", "<leader>bc", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
+map("n", "<leader>bd", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
 map("n", "<leader>bs", split_sensibly, { desc = "Split Buffer" })
 -- Format Buffer with and without LSP
 map("n", "<leader>bf", format_buffer, { noremap = true, silent = true, desc = "Format Buffer" })
@@ -117,6 +107,25 @@ map("n", "<leader>gp", "<cmd>:Git pull<cr>", { noremap = true, silent = true, de
 map("n", "<leader>gs", "<cmd>:Git push<cr>", { noremap = true, silent = true, desc = "Git Pull" })
 map("n", "<leader>ga", "<cmd>:Git add .<cr>", { noremap = true, silent = true, desc = "Git Add All" })
 
+-- Session mappings
+local sessions, err = pcall(require, "mini.sessions")
+if sessions then
+map("n", "<leader>ss", function()
+    vim.cmd("wall") -- save all buffers
+    sessions.write()
+    sessions.select()
+end, { desc = "Switch Session" })
+map("n", "<leader>sw", function()
+    local cwd = vim.fn.getcwd()
+    local last_folder = cwd:match("([^/]+)$")
+    sessions.write(last_folder)
+end, { desc = "Write Session" })
+map("n", "<leader>sf", function()
+    vim.cmd("wall") -- save all buffers
+    sessions.select()
+end, { desc = "Load Session" })
+end
+
 -- map("n", "gg", function() _LAZYGIT_TOGGLE() end, { desc = "Lazygit" })
 -- map("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<CR>", { desc = "Next Hunk" })
 -- map("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", { desc = "Prev Hunk" })
@@ -132,14 +141,13 @@ map("n", "<leader>ga", "<cmd>:Git add .<cr>", { noremap = true, silent = true, d
 -- map("n", "gd", function() _GITDIFF_TOGGLE() end, { desc = "Diff Delta" })
 
 -- LSP mappings
-map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", { desc = "Format" })
+map("n", "<leader>lf", format_buffer, { desc = "Format" })
 map("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Go To Implementation" })
 map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go To Definition" })
 map("n", "<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover" })
-map("n", "<leader>lr", rename_symbol, { desc = "Rename" })
-map("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.setqflist()>", { desc = "Populate Quickfix" })
-map("n", "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
-map("n", "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
+map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
+-- map("n", "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
+-- map("n", "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
 -- map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Go To Declaration" })
 -- map("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Document Symbols" })
 -- map("n", "lt", function()

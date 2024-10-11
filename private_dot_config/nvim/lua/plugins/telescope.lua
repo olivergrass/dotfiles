@@ -2,9 +2,16 @@ return {
     -- Multi-file search/replace
     {
         "nvim-pack/nvim-spectre",
-        -- stylua: ignore
+        enabled = false,
         keys = {
             { "<leader>fs", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+        },
+    },
+    {
+        "MagicDuck/grug-far.nvim",
+        opts = {},
+        keys = {
+            { "<leader>fr", function() require("grug-far").open({ transient = true }) end, desc = "Replace in files (Grug)" },
         },
     },
 

@@ -109,9 +109,10 @@ local buttons = {
         button("e", icons.ui.NewFile  .. "  > New file",  ":ene | startinsert<CR>"),
         button("f", icons.ui.FindFile .. "  > Find file", ":cd $HOME | Telescope find_files<CR>"),
         button("r", icons.ui.History  .. "  > Recent",    ":Telescope oldfiles<CR>"),
-        button("p", icons.ui.Projects .. "  > Projects",  ":Telescope projects<CR>"),
-        button("s", icons.ui.Gear     .. "  > Settings",  ":cd $HOME/.config/nvim | Telescope find_files<CR>"),
+        button("p", icons.ui.Projects .. "  > Projects",  ":lua require('mini.sessions').select()<CR>"),
+        button("s", icons.ui.Gear     .. "  > Settings",  ":lua require('mini.sessions').read('nvim')<CR>"),
         button("q", icons.ui.SignOut  .. "  > Quit NVIM", ":qa<CR>"),
+        -- button("s", icons.ui.Gear     .. "  > Settings",  ":cd $HOME/.config/nvim | Telescope find_files<CR>"),
     },
     opts = {
         spacing = 1,

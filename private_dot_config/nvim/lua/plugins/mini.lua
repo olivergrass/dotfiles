@@ -41,7 +41,7 @@ return {
     },
     {
         "echasnovski/mini.comment",
-        events = { "BufReadPre" },
+        lazy = true,
         version = "*",
         opts = {
             mappings = {
@@ -116,6 +116,7 @@ return {
                     { mode = "n", keys = "<Leader>l", desc = "󰘦 LSP" },
                     { mode = "n", keys = "<Leader>f", desc = " Find" },
                     { mode = "n", keys = "<Leader>t", desc = " Terminal" },
+                    { mode = "n", keys = "<leader>s", desc = "󰆓 Sessions" },
                     require("mini.clue").gen_clues.builtin_completion(),
                     require("mini.clue").gen_clues.g(),
                     require("mini.clue").gen_clues.marks(),
@@ -124,7 +125,7 @@ return {
                     require("mini.clue").gen_clues.z(),
                 },
                 window = {
-                    delay = 100,
+                    delay = 300,
                 },
             })
         end,
@@ -166,7 +167,6 @@ return {
                 window = {
                     config = win_config,
                 },
-
             })
         end,
 
@@ -184,8 +184,7 @@ return {
         opts = {},
     },
     {
-        "echasnovski/mini.surround",
-        events = { "VeryLazy" },
+        "echasnovski/mini.sessions",
         version = "*",
         opts = {},
     },

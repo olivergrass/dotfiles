@@ -1,9 +1,10 @@
 -- Have to set mapleader before loading lazy
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -25,7 +26,7 @@ local modules = {
     -- "user.disabled",
     "user.options",
     "user.keymaps",
-    "user.colorscheme",
+    -- "user.colorscheme",
 }
 
 for _, mod in ipairs(modules) do
