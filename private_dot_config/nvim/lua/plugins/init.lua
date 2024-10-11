@@ -14,6 +14,16 @@ return {
         }
     },
     {
+        "pteroctopus/faster.nvim",
+        opts = {
+            behaviours = {
+                bigfile = {
+                    on = true,
+                },
+            },
+        },
+    },
+    {
       "folke/flash.nvim",
       event = "VeryLazy",
       opts = {

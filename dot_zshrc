@@ -32,7 +32,7 @@ alias lt="exa --tree --level=2" # tree
 alias help="run-help"
 
 function code() {
-    local code_path="/mnt/c/Users/olleg/AppData/Local/Programs/Microsoft VS Code/Code.exe"
+    local code_path="/mnt/c/Program Files/Microsoft VS Code/Code.exe"
     "$code_path" --remote wsl+Ubuntu -n "$(pwd)"
 }
 

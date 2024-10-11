@@ -10,9 +10,18 @@ end
 
 local format_buffer = function()
     if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
-        vim.lsp.buf.format()
-    else
         vim.cmd('normal gg=G<C-o>')
+    else
+        vim.lsp.buf.format()
+    end
+end
+
+local rename_symbol = function()
+    if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
+        -- vim.lsp.buf.rename()
+        vim.cmd('grep'..vim.fn.expand('<cword>')..'./')
+    else
+        vim.cmd('grep'..vim.fn.expand('<cword>')..'./')
     end
 end
 
@@ -127,9 +136,10 @@ map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", { des
 map("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Go To Implementation" })
 map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go To Definition" })
 map("n", "<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover" })
-map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
--- map("n", "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
--- map("n", "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
+map("n", "<leader>lr", rename_symbol, { desc = "Rename" })
+map("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.setqflist()>", { desc = "Populate Quickfix" })
+map("n", "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
+map("n", "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
 -- map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Go To Declaration" })
 -- map("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Document Symbols" })
 -- map("n", "lt", function()

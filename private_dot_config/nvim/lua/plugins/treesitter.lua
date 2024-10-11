@@ -2,7 +2,9 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         version = false, -- last release is way too old and doesn't work on Windows
+        commit = "86c10df",
         build = ":TSUpdate",
+        lazy = false,
         event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePost" },
         init = function(plugin)
             -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
@@ -51,6 +53,9 @@ return {
         opts = {
             highlight = { enable = true },
             indent = { enable = true },
+            disable = function(lang, bufnr)
+                return vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr)) > 1000000
+            end,
             ensure_installed = {
                 "bash",
                 "c",

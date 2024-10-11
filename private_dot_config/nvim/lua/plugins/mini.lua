@@ -41,7 +41,7 @@ return {
     },
     {
         "echasnovski/mini.comment",
-        lazy = true,
+        events = { "BufReadPre" },
         version = "*",
         opts = {
             mappings = {
