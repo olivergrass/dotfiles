@@ -45,7 +45,7 @@ return {
     },
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufWritePost", "BufNewFile" },
         dependencies = {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
@@ -70,17 +70,23 @@ return {
     },
     {
         "williamboman/mason.nvim",
+        cmd = "Mason",
         build = function()
             pcall(vim.cmd, "MasonUpdate")
         end,
-        config = function()
-            require("mason").setup()
+        opts = {},
+        config = function(_, opts)
+            require("mason").setup(opts)
         end,
     },
 
     {
         "williamboman/mason-lspconfig.nvim",
-        dependencies = { "nvim-lspconfig" },
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "nvim-lspconfig",
+            "williamboman/mason.nvim",
+        },
         config = function()
             require("mason-lspconfig").setup()
         end,

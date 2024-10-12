@@ -2,8 +2,11 @@ return {
     {
         "echasnovski/mini.indentscope",
         version = "*",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufEnter" },
         opts = {
+            draw = {
+                delay = 50,
+            },
             symbol = "│",
             options = { try_as_border = true },
         },
@@ -54,7 +57,7 @@ return {
     },
     {
         "echasnovski/mini.notify",
-        lazy = false,
+        lazy = true,
         version = "*",
         config = function(_, opts)
             local notify = require("mini.notify")
@@ -68,13 +71,13 @@ return {
     },
     {
         "echasnovski/mini.bracketed",
-        event = "VeryLazy",
+        keys = { "[", "]" },
         version = "*",
         opts = {},
     },
     {
         "echasnovski/mini.clue",
-        event = "VeryLazy",
+        keys = { "<leader>", "<C-x>", "g", "'", "`", '"', "<C-r>", "<C-w>", "z" },
         version = "*",
         config = function(_, _)
             require("mini.clue").setup({
@@ -132,7 +135,7 @@ return {
     },
     {
         "echasnovski/mini.diff",
-        events = { "BufReadPre", "BufNewFile" },
+        events = { "BufEnter" },
         version = "*",
         opts = {
             view = {
@@ -142,7 +145,7 @@ return {
     },
     {
         "echasnovski/mini.pick",
-        events = { "BufReadPre", "BufNewFile" },
+        lazy = true,
         version = "*",
         config = function(_, _)
             local win_config = function()
@@ -179,12 +182,13 @@ return {
     },
     {
         "echasnovski/mini.surround",
-        events = { "VeryLazy" },
+        keys = { "s" },
         version = "*",
         opts = {},
     },
     {
         "echasnovski/mini.sessions",
+        lazy = false,
         version = "*",
         opts = {},
     },

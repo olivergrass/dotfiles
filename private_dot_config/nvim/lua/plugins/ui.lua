@@ -1,6 +1,8 @@
 return {
-    { "stevearc/dressing.nvim" },
-    { "xiyaowong/nvim-transparent" },
+    {
+        "stevearc/dressing.nvim",
+        opts = {},
+    },
     {
         "folke/noice.nvim",
         enabled = true,
@@ -21,6 +23,7 @@ return {
                 { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
                 { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
                 { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
+                { filter = { event = "notify", find = "Config Change Detected" }, skip = true },
                 { filter = { event = "emsg", find = "E23" }, skip = true },
                 { filter = { event = "emsg", find = "E20" }, skip = true },
                 { filter = { find = "No signature help" }, skip = true },
@@ -51,6 +54,10 @@ return {
         },
     },
     {
+        "muniftanjim/nui.nvim",
+        lazy = true,
+    },
+    {
         "norcalli/nvim-colorizer.lua",
         cmd = "ColorizerToggle",
         config = function()
@@ -59,24 +66,27 @@ return {
     },
     {
         "rcarriga/nvim-notify",
-        enabled = true,
+        enabled = false,
         config = function()
             vim.notify = require("notify")
         end,
     },
     {
         "akinsho/bufferline.nvim",
+        enabled = false,
         config = function()
             require("user.config.bufferline")
         end,
     },
     {
         "nvim-lualine/lualine.nvim",
+        enabled = true,
+        event = { "VeryLazy" },
         config = function()
             require("user.config.lualine")
         end,
         dependencies = {
-            "folke/noice.nvim",
+            -- "folke/noice.nvim",
         },
     },
     {

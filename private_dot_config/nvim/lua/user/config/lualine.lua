@@ -56,7 +56,7 @@ lualine.setup {
             left = icons.ui.UpperLeftTriangle .. " ",
             right = icons.ui.CircleHalfLeft,
         },
-        disabled_filetypes = { "NvimTree", "alpha" },
+        disabled_filetypes = { "alpha" },
         ignore_focus = {},
         always_divide_middle = true,
         globalstatus = false,
@@ -81,16 +81,12 @@ lualine.setup {
         },
         lualine_c = { "filename" },
         lualine_x = {
-            {
-                function() return require("noice").api.status.command.get() end,
-                cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-                color = "SpecialChar",
-            },
-            {
-                function() return require("noice").api.status.mode.get() end,
-                cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                color = "Constant",
-            },
+            --     function() return require("noice").api.status.command.get() end,
+            --     cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            --     color = "SpecialChar",
+                -- function() return require("noice").api.status.mode.get() end,
+                -- cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+                -- color = "Constant",
             {
                 "diagnostics",
             },
@@ -147,5 +143,5 @@ lualine.setup {
         lualine_y = {},
         lualine_z = {}
     },
-    extensions = { "nvim-tree", "toggleterm" }
+    extensions = { "toggleterm" }
 }

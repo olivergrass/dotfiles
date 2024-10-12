@@ -1,6 +1,7 @@
 return {
     {
         "karb94/neoscroll.nvim",
+        keys = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "z" },
         config = function()
             require("user.config.neoscroll")
         end,
@@ -15,6 +16,7 @@ return {
     },
     {
         "pteroctopus/faster.nvim",
+        enabled = false,
         opts = {
             behaviours = {
                 bigfile = {
@@ -25,7 +27,6 @@ return {
     },
     {
       "folke/flash.nvim",
-      event = "VeryLazy",
       opts = {
           jump = {
               autojump = false,
@@ -50,6 +51,7 @@ return {
     },
     {
         "famiu/bufdelete.nvim",
+        cmd = { "Bdelete", "Bwipeout" },
     },
     {
         "folke/which-key.nvim",
@@ -75,6 +77,8 @@ return {
     },
     {
         "akinsho/toggleterm.nvim",
+        cmd = "ToggleTerm",
+        keys = { "C-\\" },
         config = function()
             require("user.config.toggleterm")
         end,

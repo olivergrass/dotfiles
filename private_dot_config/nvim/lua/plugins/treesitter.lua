@@ -4,8 +4,8 @@ return {
         version = false, -- last release is way too old and doesn't work on Windows
         commit = "86c10df",
         build = ":TSUpdate",
-        lazy = false,
-        event = { "VeryLazy", "BufReadPost", "BufNewFile", "BufWritePost" },
+        event = { "BufReadPost", "BufNewFile", "BufWritePost" },
+        lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file from cmdline
         init = function(plugin)
             -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
             -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
@@ -114,12 +114,5 @@ return {
             end
             require("nvim-treesitter.configs").setup(opts)
         end,
-    },
-
-    -- Automatically add closing tags for HTML and JSX
-    {
-        "windwp/nvim-ts-autotag",
-        event = { "BufReadPost", "BufNewFile", "BufWritePost" },
-        opts = {},
     },
 }
