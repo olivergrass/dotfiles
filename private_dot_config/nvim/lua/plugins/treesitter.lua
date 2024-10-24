@@ -48,12 +48,11 @@ return {
             { "<c-space>", desc = "Increment selection" },
             { "<bs>",      desc = "Decrement selection", mode = "x" },
         },
-        ---@type TSConfig
         ---@diagnostic disable-next-line: missing-fields
         opts = {
             highlight = { enable = true },
             indent = { enable = true },
-            disable = function(lang, bufnr)
+            disable = function(_, bufnr)
                 return vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr)) > 1000000
             end,
             ensure_installed = {
@@ -99,7 +98,6 @@ return {
                 },
             },
         },
-        ---@param opts TSConfig
         config = function(_, opts)
             if type(opts.ensure_installed) == "table" then
                 ---@type table<string, boolean>

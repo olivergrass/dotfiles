@@ -9,8 +9,8 @@ local split_sensibly = function()
 end
 
 -- Enable buffer switching
-map("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true, desc = "Next Buffer" })
-map("n", "<S-TAB>", ":bN<CR>", { noremap = true, silent = true, desc = "Prev Buffer" })
+-- map("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true, desc = "Next Buffer" })
+-- map("n", "<S-TAB>", ":bN<CR>", { noremap = true, silent = true, desc = "Prev Buffer" })
 
 -- Copy/paste with system clipboard
 map({ 'n', 'x' }, 'gy', '"+y', { desc = 'Copy to system clipboard' })
@@ -89,6 +89,12 @@ map(
     function() require("mini.pick").builtin.resume() end,
     { noremap = true, silent = true, desc = "Resume Picker" }
 )
+map(
+    "n",
+    "<leader><leader>",
+    function() require("telescope").extensions.smart_open.smart_open() end,
+    { noremap = true, silent = true, desc = "Smart Open" }
+)
 
 -- Git mappings
 map("n", "<leader>gl", function()
@@ -137,9 +143,9 @@ map("n", "<leader>li", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Go
 map("n", "<leader>ld", "<cmd>lua vim.lsp.buf.definition()<CR>", { desc = "Go To Definition" })
 map("n", "<leader>lh", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover" })
 map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
-map("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.setqflist()<CR>", { desc = "Populate Quickfix" })
-map("n", "<leader>lj", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
-map("n", "<leader>lk", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
+map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setqflist()<CR>", { desc = "Populate Quickfix" })
+map("n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
+map("n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
 -- map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Go To Declaration" })
 -- map("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Document Symbols" })
 -- map("n", "lt", function()

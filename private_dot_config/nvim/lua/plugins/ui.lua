@@ -30,7 +30,7 @@ return {
                 { filter = { find = "E37" }, skip = true },
             },
             views = {
-                mini = { win_options = { winblend = 100 } },
+                mini = { win_options = { winblend = 0 } },
             },
             -- you can enable a preset for easier configuration
             presets = {
