@@ -8,6 +8,12 @@ local split_sensibly = function()
     end
 end
 
+map(
+    { "n", "i" },
+    "<esc>",
+    "<cmd>noh<cr><cmd>lua require('mini.notify').clear()<cr><esc>",
+    { desc = "Escape and nohlsearch and clear notify" }
+)
 -- Enable buffer switching
 -- map("n", "<TAB>", ":bn<CR>", { noremap = true, silent = true, desc = "Next Buffer" })
 -- map("n", "<S-TAB>", ":bN<CR>", { noremap = true, silent = true, desc = "Prev Buffer" })
@@ -51,7 +57,7 @@ map("i", "<C-l>", "<Right>", { noremap = true })
 map("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Alpha" })
 map("n", "<leader>w", "<cmd>w!<CR>", { desc = "Save" })
 map("n", "<leader>q", "<cmd>q!<CR>", { desc = "Quit" })
-map("n", "<leader>h", "<cmd>nohlsearch<CR>", { desc = "No Highlight" })
+-- map("n", "<leader>h", "<cmd>nohlsearch<CR>", { desc = "No Highlight" })
 map("n", "<leader>L", "<cmd>Lazy<CR>", { desc = "Lazy" })
 
 -- Buffer mappings
@@ -107,20 +113,20 @@ map("n", "<leader>gs", "<cmd>:Git push<cr>", { noremap = true, silent = true, de
 map("n", "<leader>ga", "<cmd>:Git add .<cr>", { noremap = true, silent = true, desc = "Git Add All" })
 
 -- Session mappings
-local sessions = require("mini.sessions")
+local function sessions() return require("mini.sessions") end
 map("n", "<leader>ss", function()
     vim.cmd("wall") -- save all buffers
-    sessions.write()
-    sessions.select()
+    sessions().write()
+    sessions().select()
 end, { desc = "Switch Session" })
 map("n", "<leader>sw", function()
     local cwd = vim.fn.getcwd()
     local last_folder = cwd:match("([^/]+)$")
-    sessions.write(last_folder)
+    sessions().write(last_folder)
 end, { desc = "Write Session" })
 map("n", "<leader>sf", function()
     vim.cmd("wall") -- save all buffers
-    sessions.select()
+    sessions().select()
 end, { desc = "Load Session" })
 
 -- map("n", "gg", function() _LAZYGIT_TOGGLE() end, { desc = "Lazygit" })

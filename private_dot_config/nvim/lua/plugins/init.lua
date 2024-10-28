@@ -8,10 +8,11 @@ return {
     },
     {
         "otavioschwanck/arrow.nvim",
-        keys = { ";" },
+        keys = { ";", "m" },
         opts = {
             show_icons = true,
-            leader_key = ';' -- Recommended to be a single key
+            leader_key = ";",
+            buffer_leader_key = "m",
         }
     },
     {

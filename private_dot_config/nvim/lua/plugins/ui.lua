@@ -1,7 +1,7 @@
 return {
 	{
 		"stevearc/dressing.nvim",
-		event = "VeryLazy",
+        lazy = true,
 		opts = {},
 	},
 	{
@@ -51,7 +51,7 @@ return {
 		dependencies = {
 			"muniftanjim/nui.nvim",
 			"echasnovski/mini.notify",
-			"rcarriga/nvim-notify",
+			-- "rcarriga/nvim-notify",
 		},
 	},
 	{

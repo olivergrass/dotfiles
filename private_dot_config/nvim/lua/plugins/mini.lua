@@ -197,7 +197,7 @@ return {
 	},
 	{
 		"echasnovski/mini.sessions",
-		lazy = false,
+		lazy = true,
 		version = "*",
 		opts = {},
 	},
