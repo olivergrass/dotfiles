@@ -66,6 +66,11 @@ return {
         "echasnovski/mini.notify",
         lazy = true,
         version = "*",
+        opts = {
+            lsp_progress = {
+                enable = false,
+            },
+        },
         config = function(_, opts)
             local notify = require("mini.notify")
             notify.setup(opts)

@@ -81,6 +81,14 @@ local function winbar()
     })
 end
 
+-- listen lsp-progress event and refresh lualine
+vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  group = "lualine_augroup",
+  pattern = "LspProgressStatusUpdated",
+  callback = require("lualine").refresh,
+})
+
 lualine.setup({
     options = {
         icons_enabled = true,
@@ -122,6 +130,7 @@ lualine.setup({
             --     "filename",
             --     padding = { left = 0, right = 1 },
             -- },
+            { function () return require("lsp-progress").progress() end },
         },
         lualine_x = {
             { "diagnostics" },
