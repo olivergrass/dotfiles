@@ -23,7 +23,9 @@ local function mixed_indent()
         mixed_same_line = vim.fn.search([[\v^(\t+ | +\t)]], "nwc")
         mixed = mixed_same_line > 0
     end
-    if not mixed then return "" end
+    if not mixed then
+        return ""
+    end
     if mixed_same_line ~= nil and mixed_same_line > 0 then
         return "MI:" .. mixed_same_line
     end
@@ -36,25 +38,14 @@ local function mixed_indent()
     end
 end
 
-local function diff_source()
-    local gitsigns = vim.b.gitsigns_status_dict
-    if gitsigns then
-        return {
-            added = gitsigns.added,
-            modified = gitsigns.changed,
-            removed = gitsigns.removed
-        }
-    end
-end
-
-lualine.setup {
+lualine.setup({
     options = {
         icons_enabled = true,
         theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = {
-            left = icons.ui.UpperLeftTriangle .. " ",
-            right = icons.ui.CircleHalfLeft,
+            -- left = icons.ui.UpperLeftTriangle .. " ",
+            -- right = icons.ui.CircleHalfLeft,
         },
         disabled_filetypes = { "alpha" },
         ignore_focus = {},
@@ -64,84 +55,55 @@ lualine.setup {
             statusline = 1000,
             tabline = 1000,
             winbar = 1000,
-        }
+        },
     },
     sections = {
         lualine_a = {
             {
                 "mode",
                 icons_enabled = true,
-                icon = { icons.ui.Vim },
                 color = { gui = "bold" },
-            }
+            },
         },
         lualine_b = {
-            { "b:gitsigns_head", icon = icons.git.Branch },
-            { "diff", source = diff_source },
+            { "branch" },
+            { "diff" },
         },
-        lualine_c = { "filename" },
+        lualine_c = {
+            {
+                "filetype",
+                icon_only = true,
+                padding = { left = 1, right = 0 },
+            },
+            {
+                "filename",
+                padding = { left = 0, right = 1 },
+            },
+        },
         lualine_x = {
-            --     function() return require("noice").api.status.command.get() end,
-            --     cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-            --     color = "SpecialChar",
-                -- function() return require("noice").api.status.mode.get() end,
-                -- cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-                -- color = "Constant",
+            { "diagnostics" },
+            { trailing_whitespace },
+            { mixed_indent },
+            { "location" },
             {
-                "diagnostics",
-            },
-            {
-                trailing_whitespace,
-                color = "DiffText",
-                separator = { left = icons.ui.CircleHalfLeft, right = "" },
-            },
-            {
-                mixed_indent,
-                color = "DiffText",
-                separator = { left = icons.ui.CircleHalfLeft, right = "" },
+                -- "vim.fn.expand('%:p:h:t')",
+                -- icon = icons.ui.Folder,
+                -- padding = { left = 1, right = 1 },
             },
         },
-        lualine_y = {
-            {
-                "vim.fn.expand('%:p:h:t')",
-                icons_enabled = true,
-                icon = { icons.ui.Folder },
-                padding = { left = 0, right = 1 },
-            },
-        },
-        lualine_z = {
-            {
-                "location",
-                icons_enabled = true,
-                icon = { icons.ui.Text },
-                padding = { left = 0, right = 1 },
-            },
-        }
+        lualine_y = {},
+        lualine_z = {},
     },
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
         lualine_c = { "filename" },
-        lualine_x = { "location" },
+        lualine_x = {},
         lualine_y = {},
-        lualine_z = {}
+        lualine_z = {},
     },
     tabline = {},
-    winbar = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
-    },
-    inactive_winbar = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {}
-    },
-    extensions = { "toggleterm" }
-}
+    winbar = {},
+    inactive_winbar = {},
+    extensions = { "toggleterm" },
+})

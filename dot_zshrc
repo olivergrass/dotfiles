@@ -20,7 +20,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 export COLORTERM="truecolor"
-export EDITOR="vim -f"
+export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="bat -p"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
