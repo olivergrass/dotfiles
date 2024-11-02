@@ -44,6 +44,8 @@ vim.api.nvim_create_autocmd("ModeChanged", {
     desc = "Hide relative line numbers",
 })
 
+vim.g.projects_dir = vim.env.HOME .. "/projects"
+
 local options = {
     mouse = "a",                                  -- Enable mouse
     clipboard = "unnamedplus",                    -- Access system clipboard

@@ -38,14 +38,57 @@ local function mixed_indent()
     end
 end
 
+local function winbar()
+    -- Get the path and expand variables.
+    local path = vim.fs.normalize(vim.fn.expand("%:p") --[[@as string]])
+
+    -- Replace slashes by arrows.
+    local separator = " %#@text# "
+
+    local prefix, prefix_path = "", ""
+
+    -- If the window gets too narrow, shorten the path and drop the prefix.
+    if vim.api.nvim_win_get_width(0) < math.floor(vim.o.columns / 3) then
+        path = vim.fn.pathshorten(path)
+    else
+        -- For some special folders, add a prefix instead of the full path (making
+        -- sure to pick the longest prefix).
+        ---@type table<string, string>
+        local special_dirs = {
+            PROJECTS = vim.g.projects_dir,
+            DOTFILES = vim.fn.stdpath("config") --[[@as string]],
+            HOME = vim.env.HOME,
+            -- PERSONAL = vim.g.personal_projects_dir,
+        }
+        for dir_name, dir_path in pairs(special_dirs) do
+            if vim.startswith(path, vim.fs.normalize(dir_path)) and #dir_path > #prefix_path then
+                prefix, prefix_path = dir_name, dir_path
+            end
+        end
+        if prefix ~= "" then
+            path = path:gsub("^" .. prefix_path, "")
+            prefix = string.format("%%#@keyword#%s %s%s", icons.ui.Folder, prefix, separator)
+        end
+    end
+
+    -- Remove leading slash.
+    path = path:gsub("^/", "")
+
+    return table.concat({
+        " ",
+        prefix,
+        table.concat(vim.split(path, "/"), separator),
+    })
+end
+
 lualine.setup({
     options = {
         icons_enabled = true,
         theme = "auto",
         component_separators = { left = "", right = "" },
         section_separators = {
-            -- left = icons.ui.UpperLeftTriangle .. " ",
-            -- right = icons.ui.CircleHalfLeft,
+            left = icons.ui.CircleHalfRight,
+            right = icons.ui.CircleHalfLeft,
         },
         disabled_filetypes = { "alpha" },
         ignore_focus = {},
@@ -61,8 +104,8 @@ lualine.setup({
         lualine_a = {
             {
                 "mode",
-                icons_enabled = true,
                 color = { gui = "bold" },
+                padding = { left = 1, right = 0 },
             },
         },
         lualine_b = {
@@ -70,15 +113,15 @@ lualine.setup({
             { "diff" },
         },
         lualine_c = {
-            {
-                "filetype",
-                icon_only = true,
-                padding = { left = 1, right = 0 },
-            },
-            {
-                "filename",
-                padding = { left = 0, right = 1 },
-            },
+            -- {
+            --     "filetype",
+            --     icon_only = true,
+            --     padding = { left = 1, right = 0 },
+            -- },
+            -- {
+            --     "filename",
+            --     padding = { left = 0, right = 1 },
+            -- },
         },
         lualine_x = {
             { "diagnostics" },
@@ -103,7 +146,11 @@ lualine.setup({
         lualine_z = {},
     },
     tabline = {},
-    winbar = {},
+    winbar = {
+        lualine_c = {
+            { winbar },
+        },
+    },
     inactive_winbar = {},
     extensions = { "toggleterm" },
 })
