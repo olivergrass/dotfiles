@@ -25,6 +25,25 @@ vim.diagnostic.config({
 -- Open debug info on "hover"
 vim.cmd([[ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false }) ]])
 
+vim.api.nvim_create_autocmd("ModeChanged", {
+    -- Show relative numbers only when they matter (linewise and blockwise
+    -- selection) and 'number' is set (avoids horizontal flickering)
+    pattern = "*:[V\x16]*",
+    callback = function()
+        vim.wo.relativenumber = vim.wo.number
+    end,
+    desc = "Show relative line numbers",
+})
+vim.api.nvim_create_autocmd("ModeChanged", {
+
+    pattern = "[V\x16]*:*",
+    -- Hide relative numbers when neither linewise/blockwise mode is on
+    callback = function()
+        vim.wo.relativenumber = string.find(vim.fn.mode(), "^[V\22]") ~= nil
+    end,
+    desc = "Hide relative line numbers",
+})
+
 local options = {
     mouse = "a",                                  -- Enable mouse
     clipboard = "unnamedplus",                    -- Access system clipboard
