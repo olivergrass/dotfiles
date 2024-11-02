@@ -2,7 +2,7 @@ return {
 	{
 		"echasnovski/mini.indentscope",
 		version = "*",
-		event = { "BufEnter" },
+		event = { "CursorMoved" },
 		opts = {
 			draw = {
 				delay = 50,
@@ -143,7 +143,7 @@ return {
 	},
 	{
 		"echasnovski/mini.diff",
-		events = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		version = "*",
 		opts = {
 			view = {
@@ -197,7 +197,7 @@ return {
 	},
 	{
 		"echasnovski/mini.sessions",
-		lazy = false,
+		lazy = true,
 		version = "*",
 		opts = {},
 	},

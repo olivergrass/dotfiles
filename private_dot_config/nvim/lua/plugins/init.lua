@@ -8,10 +8,16 @@ return {
     },
     {
         "otavioschwanck/arrow.nvim",
+<<<<<<< HEAD
         keys = { ";", "m" },
         dependencies = {
             { "echasnovski/mini.icons" },
         },
+||||||| 7221f30
+        keys = { ";" },
+=======
+        keys = { ";", "m" },
+>>>>>>> 821fc5cd9a1a3d125a713b007d1bbd8be6d0c830
         opts = {
             show_icons = true,
             leader_key = ";",
@@ -89,5 +95,8 @@ return {
     },
 
     -- Language Specific
-    { "simrat39/rust-tools.nvim" },
+    {
+        "simrat39/rust-tools.nvim",
+        ft = "rust",
+    },
 }

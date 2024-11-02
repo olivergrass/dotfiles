@@ -1,10 +1,10 @@
 return {
 	{
 		"Wansmer/treesj",
-        dependencies = { "nvim-treesitter/nvim-treesitter" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		keys = {
-            { "<S-j>", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-        },
+			{ "<S-j>", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+		},
 		opts = { use_default_keymaps = false, max_join_length = 150 },
 	},
 	{
@@ -33,13 +33,14 @@ return {
 				-- Conform will run the first available formatter
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 			},
-            default_format_opts = {
-                lsp_format = "fallback",
-            },
+			default_format_opts = {
+				lsp_format = "fallback",
+			},
 		},
 	},
 	{
 		"zapling/mason-conform.nvim",
+		event = { "BufReadPost", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
 			"stevearc/conform.nvim",
