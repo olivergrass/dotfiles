@@ -40,7 +40,7 @@ return {
             nerd_font_variant = "normal",
 
             -- experimental auto-brackets support
-            accept = { auto_brackets = { enabled = true } },
+            -- accept = { auto_brackets = { enabled = true } },
 
             -- experimental signature help support
             -- trigger = { signature_help = { enabled = true } }
@@ -81,6 +81,9 @@ return {
             pcall(vim.cmd, "MasonUpdate")
         end,
         opts = {},
+        dependencies = {
+            "stevearc/dressing.nvim"
+        },
         config = function(_, opts)
             require("mason").setup(opts)
         end,

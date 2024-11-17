@@ -20,20 +20,20 @@ return {
                 progress = { enabled = false },
             },
             -- you can disable the plugin for some filetypes
-            routes = {
-                { filter = { find = "E162" }, view = "mini" },
-                { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
-                { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
-                { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
-                { filter = { event = "notify", find = "Config Change Detected" }, skip = true },
-                { filter = { event = "emsg", find = "E23" }, skip = true },
-                { filter = { event = "emsg", find = "E20" }, skip = true },
-                { filter = { find = "No signature help" }, skip = true },
-                { filter = { find = "E37" }, skip = true },
-            },
-            views = {
-                mini = { win_options = { winblend = 0 } },
-            },
+            -- routes = {
+            --     { filter = { find = "E162" }, view = "mini" },
+            --     { filter = { event = "msg_show", kind = "", find = "written" }, view = "mini" },
+            --     { filter = { event = "msg_show", find = "search hit BOTTOM" }, skip = true },
+            --     { filter = { event = "msg_show", find = "search hit TOP" }, skip = true },
+            --     { filter = { event = "notify", find = "Config Change Detected" }, skip = true },
+            --     { filter = { event = "emsg", find = "E23" }, skip = true },
+            --     { filter = { event = "emsg", find = "E20" }, skip = true },
+            --     { filter = { find = "No signature help" }, skip = true },
+            --     { filter = { find = "E37" }, skip = true },
+            -- },
+            -- views = {
+            --     mini = { win_options = { winblend = 0 } },
+            -- },
             -- you can enable a preset for easier configuration
             presets = {
                 bottom_search = true, -- use a classic bottom cmdline for search
@@ -51,7 +51,7 @@ return {
         end,
         dependencies = {
             "muniftanjim/nui.nvim",
-            "echasnovski/mini.notify",
+            -- "echasnovski/mini.notify",
             -- "rcarriga/nvim-notify",
         },
     },

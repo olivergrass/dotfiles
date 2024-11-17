@@ -46,6 +46,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 
 vim.g.projects_dir = vim.env.HOME .. "/projects"
 
+-- stylua ignore start
 local options = {
     mouse = "a",                                  -- Enable mouse
     clipboard = "unnamedplus",                    -- Access system clipboard
@@ -74,16 +75,17 @@ local options = {
     undofile = true,                              -- Enable persistent undo
     writebackup = false,                          -- Don"t clash between programs
     cursorline = true,                            -- Highlight the current line
-    cmdheight = 0,                                -- Experimental: remove command section
+    cmdheight = 1,                                -- Experimental: remove command section
     autochdir = false,                            -- Change directory to the file being edited
-    foldmethod = "expr",
+    -- foldmethod = "expr", -- managed by bigfile snack
     foldexpr = "v:lua.vim.treesitter.foldexpr()",
     foldcolumn = "0",
-    foldtext = "",
     foldlevel = 99,
+    foldtext = "",
     foldlevelstart = 5,
     foldnestmax = 6,
 }
+-- stylua ignore end
 
 for k, v in pairs(options) do
     vim.opt[k] = v

@@ -11,7 +11,8 @@ end
 map(
     { "n", "i" },
     "<esc>",
-    "<cmd>noh<cr><cmd>lua require('mini.notify').clear()<cr><esc>",
+    "<cmd>noh<cr><esc>",
+    -- <cmd>lua require('mini.notify').clear()<cr><esc>",
     { desc = "Escape and nohlsearch and clear notify" }
 )
 -- Enable buffer switching
@@ -53,10 +54,17 @@ map("i", "<C-j>", "<Down>", { noremap = true })
 map("i", "<C-k>", "<Up>", { noremap = true })
 map("i", "<C-l>", "<Right>", { noremap = true })
 
+-- Resize windows with v:count
+map('n', '<C-Left>',  '"<cmd>vertical resize +" . v:count1 . "<CR>"', { expr = true, replace_keycodes = false, desc = 'Decrease window width' })
+map('n', '<C-Down>',  '"<cmd>resize +"          . v:count1 . "<CR>"', { expr = true, replace_keycodes = false, desc = 'Decrease window height' })
+map('n', '<C-Up>',    '"<cmd>resize -"          . v:count1 . "<CR>"', { expr = true, replace_keycodes = false, desc = 'Increase window height' })
+map('n', '<C-Right>', '"<cmd>vertical resize -" . v:count1 . "<CR>"', { expr = true, replace_keycodes = false, desc = 'Increase window width' })
+
+
 -- General mappings
 map("n", "<leader>a", "<cmd>Alpha<CR>", { desc = "Alpha" })
-map("n", "<leader>w", "<cmd>w!<CR>", { desc = "Save" })
-map("n", "<leader>q", "<cmd>q!<CR>", { desc = "Quit" })
+map("n", "<leader>w", "<cmd>wa!<CR>", { desc = "Save" })
+map("n", "<leader>q", "<cmd>qa!<CR>", { desc = "Quit" })
 -- map("n", "<leader>h", "<cmd>nohlsearch<CR>", { desc = "No Highlight" })
 map("n", "<leader>L", "<cmd>Lazy<CR>", { desc = "Lazy" })
 
@@ -68,8 +76,8 @@ map(
     function() require("mini.pick").builtin.buffers() end,
     { noremap = true, silent = true, desc = "Buffers" }
 )
-map("n", "<leader>bc", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
-map("n", "<leader>bd", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
+-- map("n", "<leader>bc", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
+-- map("n", "<leader>bd", "<cmd>Bdelete!<CR>", { desc = "Close Buffer" })
 map("n", "<leader>bs", split_sensibly, { desc = "Split Buffer" })
 -- Format Buffer with and without LSP
 -- map("n", "<leader>bf", format_buffer, { noremap = true, silent = true, desc = "Format Buffer" })
@@ -103,11 +111,11 @@ map(
 )
 
 -- Git mappings
-map("n", "<leader>gl", function()
-    require("mini.misc").setup_auto_root()
-    split_sensibly()
-    vim.cmd("terminal lazygit")
-end, { noremap = true, silent = true, desc = "Lazygit" })
+-- map("n", "<leader>gl", function()
+--     require("mini.misc").setup_auto_root()
+--     split_sensibly()
+--     vim.cmd("terminal lazygit")
+-- end, { noremap = true, silent = true, desc = "Lazygit" })
 map("n", "<leader>gp", "<cmd>:Git pull<cr>", { noremap = true, silent = true, desc = "Git Push" })
 map("n", "<leader>gs", "<cmd>:Git push<cr>", { noremap = true, silent = true, desc = "Git Pull" })
 map("n", "<leader>ga", "<cmd>:Git add .<cr>", { noremap = true, silent = true, desc = "Git Add All" })

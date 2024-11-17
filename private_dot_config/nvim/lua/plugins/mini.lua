@@ -64,6 +64,7 @@ return {
     },
     {
         "echasnovski/mini.notify",
+        enabled = false,
         lazy = true,
         version = "*",
         opts = {
@@ -133,6 +134,7 @@ return {
                     { mode = "n", keys = "<Leader>f", desc = " Find" },
                     { mode = "n", keys = "<Leader>t", desc = " Terminal" },
                     { mode = "n", keys = "<leader>s", desc = "󰆓 Sessions" },
+                    { mode = "n", keys = "<leader>u", desc = "  Toggles" },
                     require("mini.clue").gen_clues.builtin_completion(),
                     require("mini.clue").gen_clues.g(),
                     require("mini.clue").gen_clues.marks(),
@@ -145,6 +147,15 @@ return {
                 },
             })
         end,
+    },
+    {
+        "echasnovski/mini.animate",
+        event = { "BufReadPost", "BufNewFile" },
+        version = "*",
+        opts = {
+            cursor = { enable = false },
+            scroll = { enable = false },
+        },
     },
     {
         "echasnovski/mini.diff",
