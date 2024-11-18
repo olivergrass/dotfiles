@@ -23,3 +23,6 @@ curl -sS https://starship.rs/install.sh | sh
 
 # Install node version manager
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# Install TMUX package manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

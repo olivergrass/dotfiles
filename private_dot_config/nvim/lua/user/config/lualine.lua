@@ -84,9 +84,9 @@ end
 -- listen lsp-progress event and refresh lualine
 vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
 vim.api.nvim_create_autocmd("User", {
-  group = "lualine_augroup",
-  pattern = "LspProgressStatusUpdated",
-  callback = require("lualine").refresh,
+    group = "lualine_augroup",
+    pattern = "LspProgressStatusUpdated",
+    callback = require("lualine").refresh,
 })
 
 lualine.setup({
@@ -130,7 +130,12 @@ lualine.setup({
             --     "filename",
             --     padding = { left = 0, right = 1 },
             -- },
-            { function () return require("lsp-progress").progress() end },
+            -- { function () return require("lsp-progress").progress() end },
+            {
+                require("tmux-status").tmux_windows,
+                cond = require("tmux-status").show,
+                padding = { left = 3 },
+            },
         },
         lualine_x = {
             { "diagnostics" },

@@ -108,6 +108,11 @@ return {
         },
     },
     {
+        "christopher-francisco/tmux-status.nvim",
+        lazy = true,
+        opts = {},
+    },
+    {
         "goolord/alpha-nvim",
         event = { "VimEnter" },
         config = function()
