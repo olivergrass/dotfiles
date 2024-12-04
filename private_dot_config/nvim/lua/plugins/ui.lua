@@ -18,6 +18,11 @@ return {
                 },
                 hover = { enabled = true },
                 progress = { enabled = false },
+                signature = {
+                    auto_open = {
+                        enabled = false,
+                    },
+                },
             },
             -- you can disable the plugin for some filetypes
             -- routes = {
