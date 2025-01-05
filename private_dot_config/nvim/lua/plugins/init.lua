@@ -46,6 +46,7 @@ return {
                     end,
                 },
             },
+            input = { enabled = true },
             notifier = { enabled = true },
             quickfile = { enabled = true },
             statuscolumn = { enabled = false },
@@ -53,6 +54,7 @@ return {
         },
         keys = {
             -- stylua: ignore start
+            { "<leader>.", function() Snacks.scratch() end, desc = "Scratch" },
             { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
             { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
             { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },

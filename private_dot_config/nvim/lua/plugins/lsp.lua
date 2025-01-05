@@ -1,28 +1,45 @@
 return {
     {
         "saghen/blink.cmp",
-        lazy = false, -- lazy loading handled internally
+        event = { "InsertEnter", "CmdlineEnter" },
         dependencies = "rafamadriz/friendly-snippets",
 
         -- use a release tag to download pre-built binaries
         version = "v0.*",
 
         opts = {
+            appearance = {
+                use_nvim_cmp_as_default = false,
+                nerd_font_variant = "mono",
+            },
+
+            completion = {
+                accept = { auto_brackets = { enabled = true } },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 250,
+                    treesitter_highlighting = true,
+                },
+                ghost_text = { enabled = false },
+                menu = {
+                    cmdline_position = function()
+                        if vim.g.ui_cmdline_pos ~= nil then
+                            local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
+                            return { pos[1] - 1, pos[2] }
+                        end
+                        local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+                        return { vim.o.lines - height, 0 }
+                    end,
+                },
+            },
+
+            signature = { enabled = true },
+
             keymap = {
                 ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-                ["<C-e>"] = { "hide" },
+                ["<C-e>"] = { "hide", "fallback" },
 
-                ["<Tab>"] = {
-                    function(cmp)
-                        if cmp.is_in_snippet() then
-                            return cmp.accept()
-                        else
-                            return cmp.select_and_accept()
-                        end
-                    end,
-                    "snippet_forward",
-                    "fallback",
-                },
+                ["<Tab>"] = { "snippet_forward", "accept", "fallback" },
                 ["<S-Tab>"] = { "snippet_backward", "fallback" },
 
                 ["<Up>"] = { "select_prev", "fallback" },
@@ -33,17 +50,6 @@ return {
                 ["<C-b>"] = { "scroll_documentation_up", "fallback" },
                 ["<C-f>"] = { "scroll_documentation_down", "fallback" },
             },
-            highlight = {
-                use_nvim_cmp_as_default = true,
-            },
-            -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-            nerd_font_variant = "normal",
-
-            -- experimental auto-brackets support
-            -- accept = { auto_brackets = { enabled = true } },
-
-            -- experimental signature help support
-            -- trigger = { signature_help = { enabled = true } }
         },
     },
     {
@@ -75,7 +81,6 @@ return {
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(args)
-                    local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
                     if client.config.name == "ruff" then
                         client.handlers["textDocument/publishDiagnostics"] = false
@@ -89,7 +94,6 @@ return {
                     end
                 end,
             })
-
         end,
     },
     {
@@ -100,7 +104,7 @@ return {
         end,
         opts = {},
         dependencies = {
-            "stevearc/dressing.nvim"
+            "stevearc/dressing.nvim",
         },
         config = function(_, opts)
             require("mason").setup(opts)
