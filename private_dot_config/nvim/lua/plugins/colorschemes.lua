@@ -47,12 +47,25 @@ return {
     {
         "catppuccin/nvim",
         as = "catppuccin",
+        lazy = true,
         priority = 1000,
         config = function()
             require("catppuccin").setup({
                 compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
             })
-            vim.cmd("colorscheme catppuccin")
+            vim.cmd.colorscheme("catppuccin")
+        end,
+    },
+    {
+        "sainnhe/gruvbox-material",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            -- Optionally configure and load the colorscheme
+            -- directly inside the plugin declaration.
+            vim.g.gruvbox_material_background = "medium"
+            vim.g.gruvbox_material_enable_italic = true
+            vim.cmd.colorscheme("gruvbox-material")
         end,
     },
 }
