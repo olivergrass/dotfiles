@@ -232,6 +232,7 @@ return {
     },
     {
         "echasnovski/mini.pairs",
+        enabled = false,
         event = { "InsertEnter" },
         version = "*",
         opts = {},
