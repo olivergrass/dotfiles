@@ -47,7 +47,7 @@ return {
     {
         "catppuccin/nvim",
         as = "catppuccin",
-        lazy = true,
+        lazy = false,
         priority = 1000,
         config = function()
             require("catppuccin").setup({
@@ -58,7 +58,7 @@ return {
     },
     {
         "sainnhe/gruvbox-material",
-        lazy = false,
+        lazy = true,
         priority = 1000,
         config = function()
             -- Optionally configure and load the colorscheme

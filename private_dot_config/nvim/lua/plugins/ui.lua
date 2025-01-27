@@ -119,6 +119,7 @@ return {
     },
     {
         "goolord/alpha-nvim",
+        enabled = true,
         event = { "VimEnter" },
         config = function()
             require("user.config.alpha")

@@ -21,7 +21,7 @@ require("lazy").setup({
     spec = { { import = "plugins" } },
     install = { colorscheme = { "catppuccin", "habamax" } },
     change_detection = { notify = false },
-    -- profiling = { require = true },
+    profiling = { require = true },
     performance = { disabled_plugins = {
         "gzip",
         "matchit",

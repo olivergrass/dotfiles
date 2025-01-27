@@ -1,8 +1,5 @@
 return {
     {
-        "stevearc/profile.nvim"
-    },
-    {
         "karb94/neoscroll.nvim",
         keys = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "z" },
         config = function()
@@ -28,29 +25,13 @@ return {
         lazy = false,
         ---@type snacks.Config
         opts = {
-            bigfile = {
-                ---@class snacks.bigfile.Config
-                {
-                    notify = true, -- show notification when big file detected
-                    size = 1.5 * 1024 * 1024, -- 1.5MB
-                    -- Enable or disable features when big file detected
-                    ---@param ctx {buf: number, ft:string}
-                    setup = function(ctx)
-                        vim.b.minianimate_disable = true
-                        vim.b.miniindentscope_disable = true
-                        vim.opt.foldmethod = "manual"
-                        vim.schedule(function()
-                            vim.bo[ctx.buf].syntax = ctx.ft
-                            vim.opt.foldmethod = "expr"
-                        end)
-                    end,
-                },
-            },
+            bigfile = { enabled = true },
             input = { enabled = true },
             notifier = { enabled = true },
             quickfile = { enabled = true },
             statuscolumn = { enabled = false },
             words = { enabled = true },
+            dashboard = { enabled = false },
         },
         keys = {
             -- stylua: ignore start
