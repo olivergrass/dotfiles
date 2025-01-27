@@ -6,6 +6,7 @@ ZSH_THEME=""
 
 # Standard plugins can be found in $ZSH/plugins/
 plugins=(
+    asdf
     z
     fzf
     command-not-found
@@ -26,6 +27,7 @@ export PAGER="bat -p"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 alias cd="z"
+alias vimdiff="nvim -d"
 alias vi="nvim"
 alias ls="exa"
 alias ll="exa -1lbF --git --icons" # long list
@@ -136,6 +138,18 @@ export DISPLAY=:0
 
 # Starship
 eval "$(starship init zsh)"
+
+# Enabling shell completion for uv
+eval "$(uv generate-shell-completion zsh)"
+
+_uv_run_mod() {
+    if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+        _arguments '*:filename:_files'
+    else
+        _uv "$@"
+    fi
+}
+compdef _uv_run_mod uv
 
 # NPM version manager
 export NVM_DIR="$HOME/.nvm"

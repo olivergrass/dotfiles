@@ -2,11 +2,11 @@ vim.g.clipboard = {
     name = "xsel",
     copy = {
         ["+"] = "xsel -i -b",
-        ["*"] = "xsel -i -p"
+        ["*"] = "xsel -i -p",
     },
     paste = {
         ["+"] = "xsel -b",
-        ["*"] = "xsel -p"
+        ["*"] = "xsel -p",
     },
 }
 
@@ -45,17 +45,29 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 })
 
 -- hook for tmux session name
-vim.api.nvim_create_autocmd({ 'VimEnter', 'VimLeave' }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "VimLeave" }, {
     callback = function()
         if vim.env.TMUX_PLUGIN_MANAGER_PATH then
-            vim.uv.spawn(vim.env.TMUX_PLUGIN_MANAGER_PATH .. '/tmux-window-name/scripts/rename_session_windows.py', {})
+            vim.uv.spawn(vim.env.TMUX_PLUGIN_MANAGER_PATH .. "/tmux-window-name/scripts/rename_session_windows.py", {})
         end
     end,
 })
 
+-- preserve folds
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+    pattern = { "*.*" },
+    desc = "save view (folds), when closing file",
+    command = "mkview",
+})
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    pattern = { "*.*" },
+    desc = "load view (folds), when opening file",
+    command = "silent! loadview",
+})
+
 vim.g.projects_dir = vim.env.HOME .. "/projects"
 
--- stylua ignore start
+-- stylua: ignore start
 local options = {
     mouse = "a",                                  -- Enable mouse
     clipboard = "unnamedplus",                    -- Access system clipboard
@@ -84,7 +96,7 @@ local options = {
     undofile = true,                              -- Enable persistent undo
     writebackup = false,                          -- Don"t clash between programs
     cursorline = true,                            -- Highlight the current line
-    cmdheight = 0,                                -- Experimental: remove command section
+    cmdheight = 1,                                -- Experimental: remove command section
     autochdir = false,                            -- Change directory to the file being edited
     -- foldmethod = "expr", -- managed by bigfile snack
     foldexpr = "v:lua.vim.treesitter.foldexpr()",
@@ -94,7 +106,7 @@ local options = {
     foldlevelstart = 5,
     foldnestmax = 6,
 }
--- stylua ignore end
+-- stylua: ignore end
 
 for k, v in pairs(options) do
     vim.opt[k] = v

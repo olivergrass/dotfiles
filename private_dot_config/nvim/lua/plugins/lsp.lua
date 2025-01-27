@@ -81,15 +81,28 @@ return {
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(args)
+                    local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
                     if client.config.name == "ruff" then
-                        client.handlers["textDocument/publishDiagnostics"] = false
+                        -- client.handlers["textDocument/publishDiagnostics"] = function(...)
+                        --     local result = select(2, ...)
+                        --     result.diagnostics = {}
+                        -- end
                         client.server_capabilities.hoverProvider = false
+                        client.server_capabilities.completionProvider = false
                     end
                     if client.config.name == "basedpyright" then
+                        -- client.handlers["textDocument/publishDiagnostics"] = function(...)
+                        --     local result = select(2, ...)
+                        --     result.diagnostics = {}
+                        -- end
                         client.server_capabilities.hoverProvider = false
                     end
                     if client.config.name == "jedi_language_server" then
+                        client.handlers["textDocument/publishDiagnostics"] = function(...)
+                            local result = select(2, ...)
+                            result.diagnostics = {}
+                        end
                         client.server_capabilities.completionProvider = false
                     end
                 end,
@@ -104,7 +117,7 @@ return {
         end,
         opts = {},
         dependencies = {
-            "stevearc/dressing.nvim",
+            "stevearc/dressing.nvim"
         },
         config = function(_, opts)
             require("mason").setup(opts)
