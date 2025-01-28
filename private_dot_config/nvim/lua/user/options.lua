@@ -22,7 +22,7 @@ vim.diagnostic.config({
     virtual_lines = false,
 })
 
--- Open debug info on "hover"
+-- Show diagnostic info on cursor hover
 vim.cmd([[ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false }) ]])
 
 vim.api.nvim_create_autocmd("ModeChanged", {

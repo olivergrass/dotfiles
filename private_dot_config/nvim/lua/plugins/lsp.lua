@@ -60,23 +60,41 @@ return {
             "williamboman/mason-lspconfig.nvim",
         },
         config = function()
+            require("lspconfig.ui.windows").default_options = { border = "rounded" }
+
+            local hover = vim.lsp.buf.hover
+            vim.lsp.buf.hover = function()
+                return hover({
+                    border = "rounded",
+                    max_height = math.floor(vim.o.lines * 0.5),
+                    max_width = math.floor(vim.o.columns * 0.4),
+                })
+            end
+
+            local signature = vim.lsp.buf.signature_help
+            vim.lsp.buf.signature_help = function()
+                return signature({
+                    border = "rounded",
+                    max_height = math.floor(vim.o.lines * 0.5),
+                    max_width = math.floor(vim.o.columns * 0.4),
+                })
+            end
+
             require("mason-lspconfig").setup_handlers({
                 function(server_name)
                     require("lspconfig")[server_name].setup({})
                 end,
-            })
-
-            require("lspconfig")["lua_ls"].setup({
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = {
-                                "vim",
-                                "bit",
+                ["lua_ls"] = function()
+                    require("lspconfig").lua_ls.setup({
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { "vim", "bit" },
+                                },
                             },
                         },
-                    },
-                },
+                    })
+                end,
             })
 
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -117,7 +135,8 @@ return {
         end,
         opts = {},
         dependencies = {
-            "stevearc/dressing.nvim"
+            "stevearc/dressing.nvim",
+            "olivergrass/mini.pick",
         },
         config = function(_, opts)
             require("mason").setup(opts)

@@ -174,6 +174,7 @@ return {
         cmd = { "Pick" },
         version = "*",
         config = function(_, _)
+            vim.ui.select = require("mini.pick").ui_select
             local win_config = function()
                 local height = math.floor(0.618 * vim.o.lines)
                 local width = math.floor(0.618 * vim.o.columns)
