@@ -91,9 +91,25 @@ return {
     {
         "echasnovski/mini.clue",
         events = { "BufReadPre", "BufNewFile" },
-        keys = { "<leader>", "<C-x>", "g", "'", "`", '"', "<C-r>", "<C-w>", "z" },
+        keys = { "<leader>", "<C-x>", "g", "'", "`", '"', "<C-r>", "<C-w>", "z", "@" },
         version = "*",
         config = function(_, _)
+            -- Clues for recorded macros.
+            local function macro_clues()
+                local res = {}
+                for _, register in ipairs(vim.split('abcdefghijklmnopqrstuvwxyz', '')) do
+                    local keys = string.format('@%s', register)
+                    local ok, desc = pcall(vim.fn.getreg, register)
+                    if ok and desc ~= '' then
+                        ---@cast desc string
+                        desc = string.format('register: %s', desc:gsub('%s+', ' '))
+                        table.insert(res, { mode = 'n', keys = keys, desc = desc })
+                        table.insert(res, { mode = 'v', keys = keys, desc = desc })
+                    end
+                end
+                return res
+            end
+
             require("mini.clue").setup({
                 triggers = {
                     -- Leader triggers
@@ -118,6 +134,7 @@ return {
                     { mode = "x", keys = '"' },
                     { mode = "i", keys = "<C-r>" },
                     { mode = "c", keys = "<C-r>" },
+                    { mode = "n", keys = "@" },
 
                     -- Window commands
                     { mode = "n", keys = "<C-w>" },
@@ -125,6 +142,11 @@ return {
                     -- `z` key
                     { mode = "n", keys = "z" },
                     { mode = "x", keys = "z" },
+
+                    -- Moving between stuff
+                    { mode = "n", keys = "[" },
+                    { mode = "n", keys = "]" },
+
                 },
                 clues = {
                     -- Enhance this by adding descriptions for <Leader> mapping groups
@@ -135,15 +157,33 @@ return {
                     { mode = "n", keys = "<Leader>t", desc = " Terminal" },
                     { mode = "n", keys = "<leader>s", desc = "󰆓 Sessions" },
                     { mode = "n", keys = "<leader>u", desc = "  Toggles" },
+                    { mode = "n", keys = "[", desc = "+prev" },
+                    { mode = "n", keys = "]", desc = "+next" },
                     require("mini.clue").gen_clues.builtin_completion(),
                     require("mini.clue").gen_clues.g(),
                     require("mini.clue").gen_clues.marks(),
                     require("mini.clue").gen_clues.registers(),
                     require("mini.clue").gen_clues.windows(),
                     require("mini.clue").gen_clues.z(),
+                    macro_clues,
                 },
                 window = {
-                    delay = 300,
+                    delay = 500,
+                    config = function(bufnr)
+                        local max_width = 0
+                        for _, line in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
+                            max_width = math.max(max_width, vim.fn.strchars(line))
+                        end
+
+                        -- Keep some right padding.
+                        max_width = max_width + 2
+
+                        return {
+                            border = "rounded",
+                            -- Dynamic width capped at 70.
+                            width = math.min(70, max_width),
+                        }
+                    end,
                 },
             })
         end,
