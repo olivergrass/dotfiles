@@ -257,6 +257,10 @@ return {
         lazy = true,
         version = "*",
         opts = {},
+        dependencies = {
+            "olivergrass/mini.pick",
+            "echasnovski/mini.pick",
+        },
     },
     {
         "echasnovski/mini.move",

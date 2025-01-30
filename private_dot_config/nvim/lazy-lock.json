@@ -9,6 +9,7 @@
   "flash.nvim": { "branch": "main", "commit": "34c7be146a91fec3555c33fe89c7d643f6ef5cf1" },
   "friendly-snippets": { "branch": "main", "commit": "00ebcaa159e817150bd83bfe2d51fa3b3377d5c4" },
   "github-nvim-theme": { "branch": "main", "commit": "6b461635230ccb5d0037f378fbe05a27c4ccf7cd" },
+  "goto-preview": { "branch": "main", "commit": "4972fcd01c568c2ae981f3f48182e7832ed544ec" },
   "grug-far.nvim": { "branch": "main", "commit": "ccc7a36c25b933a1857c37919fd035fd1480961f" },
   "gruvbox-material": { "branch": "master", "commit": "e41451337d33997aff4c078a83165a9f66e2d38d" },
   "ice-cave.nvim": { "branch": "main", "commit": "6ef5a27645d7b7340030c7597ef76ce3580cde1e" },
