@@ -178,6 +178,63 @@ return {
         end,
     },
     {
+        "github/copilot.vim",
+        cmd = "Copilot",
+        lazy = true,
+        build = "Copilot auth",
+        config = function()
+            vim.g.copilot_filetypes = {
+                ["*"] = false,
+            }
+        end,
+    },
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "github/copilot.vim",
+        },
+        cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
+        opts = {
+            strategies = {
+                chat = {
+                    ["file"] = {
+                        callback = "strategies.chat.slash_commands.file",
+                        description = "Select a file using Telescope",
+                        opts = {
+                            provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua', snacks
+                            contains_code = true,
+                        },
+                    },
+                    adapter = "copilot",
+                },
+                inline = {
+                    adapter = "copilot",
+                },
+                agent = {
+                    adapter = "copilot",
+                },
+            },
+        },
+        config = function(opts)
+            -- Expand 'cc' into 'CodeCompanion' in the command line
+            vim.cmd([[cab cc CodeCompanion]])
+
+            require("codecompanion").setup(opts)
+        end,
+    },
+    {
+        "OXY2DEV/markview.nvim",
+        ft = { "markdown", "codecompanion" },
+        opts = {
+            preview = {
+                filetypes = { "markdown", "codecompanion" },
+                ignore_buftypes = {},
+            },
+        },
+    },
+    {
         "akinsho/toggleterm.nvim",
         enabled = false,
         cmd = "ToggleTerm",

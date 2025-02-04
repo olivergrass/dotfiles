@@ -120,6 +120,10 @@ map("n", "<leader>gp", "<cmd>:Git pull<cr>", { noremap = true, silent = true, de
 map("n", "<leader>gs", "<cmd>:Git push<cr>", { noremap = true, silent = true, desc = "Git Pull" })
 map("n", "<leader>ga", "<cmd>:Git add .<cr>", { noremap = true, silent = true, desc = "Git Add All" })
 
+-- Code Companion
+map({ "n", "v" }, "<leader>cc", "<cmd>CodeCompanionChat Toggle<CR>", { noremap = true, silent = true, desc = "Toggle CodeCompanion" })
+map({ "n", "v" }, "<leader>ca", "<cmd>CodeCompanionActions<CR>", { noremap = true, silent = true, desc = "Toggle CodeCompanion" })
+
 -- Session mappings
 local function sessions() return require("mini.sessions") end
 map("n", "<leader>ss", function()

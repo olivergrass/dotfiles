@@ -150,6 +150,7 @@ return {
                 },
                 clues = {
                     -- Enhance this by adding descriptions for <Leader> mapping groups
+                    { mode = "n", keys = "<Leader>c", desc = " Companion" },
                     { mode = "n", keys = "<Leader>b", desc = " Buffer" },
                     { mode = "n", keys = "<Leader>g", desc = "󰊢 Git" },
                     { mode = "n", keys = "<Leader>l", desc = "󰘦 LSP" },
