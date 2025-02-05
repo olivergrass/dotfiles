@@ -105,6 +105,7 @@ local options = {
     foldtext = "",
     foldlevelstart = 5,
     foldnestmax = 6,
+    diffopt="internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram",
 }
 -- stylua: ignore end
 

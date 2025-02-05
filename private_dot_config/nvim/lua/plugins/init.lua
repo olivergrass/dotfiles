@@ -223,6 +223,16 @@ return {
                         adapter = "copilot",
                     },
                 },
+                display = {
+                    diff = {
+                        provider = "mini_diff",
+                    },
+                    chat = {
+                        diff = {
+                            provider = "mini_diff",
+                        },
+                    },
+                },
             })
         end,
     },
