@@ -64,6 +64,7 @@ return {
 
             local hover = vim.lsp.buf.hover
             vim.lsp.buf.hover = function()
+                ---@diagnostic disable-next-line: redundant-parameter
                 return hover({
                     border = "rounded",
                     max_height = math.floor(vim.o.lines * 0.5),
@@ -73,12 +74,18 @@ return {
 
             local signature = vim.lsp.buf.signature_help
             vim.lsp.buf.signature_help = function()
+                ---@diagnostic disable-next-line: redundant-parameter
                 return signature({
                     border = "rounded",
                     max_height = math.floor(vim.o.lines * 0.5),
                     max_width = math.floor(vim.o.columns * 0.4),
                 })
             end
+
+            -- vim.diagnostic.config({ virtual_lines = { current_line = true } })
+
+            -- Show diagnostic info on cursor hover
+            vim.cmd([[ autocmd CursorMoved * lua vim.diagnostic.open_float(nil, {focusable = false}) ]])
 
             require("mason-lspconfig").setup_handlers({
                 function(server_name)
@@ -97,17 +104,46 @@ return {
                 end,
             })
 
+            vim.api.nvim_create_user_command("LspCapabilities", function()
+                local curBuf = vim.api.nvim_get_current_buf()
+                local clients = vim.lsp.get_clients({ bufnr = curBuf })
+
+                for _, client in pairs(clients) do
+                    if client.name ~= "null-ls" then
+                        local capAsList = {}
+                        for key, value in pairs(client.server_capabilities) do
+                            if value and key:find("Provider") then
+                                local capability = key
+                                table.insert(capAsList, "- " .. capability)
+                            end
+                        end
+                        table.sort(capAsList) -- sorts alphabetically
+                        local msg = "# " .. client.name .. "\n" .. table.concat(capAsList, "\n")
+                        vim.notify(msg, "trace", {
+                            on_open = function(win)
+                                local buf = vim.api.nvim_win_get_buf(win)
+                                vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
+                            end,
+                            timeout = 14000,
+                        })
+                        vim.fn.setreg("+", "Capabilities = " .. vim.inspect(client.server_capabilities))
+                    end
+                end
+            end, {})
+
             vim.api.nvim_create_autocmd("LspAttach", {
                 callback = function(args)
                     local bufnr = args.buf
                     local client = vim.lsp.get_client_by_id(args.data.client_id)
                     if client.config.name == "ruff" then
-                        -- client.handlers["textDocument/publishDiagnostics"] = function(...)
-                        --     local result = select(2, ...)
-                        --     result.diagnostics = {}
-                        -- end
+                        client.handlers["textDocument/publishDiagnostics"] = function(...)
+                            local result = select(2, ...)
+                            result.diagnostics = {}
+                        end
                         client.server_capabilities.hoverProvider = false
                         client.server_capabilities.completionProvider = false
+                        client.server_capabilities.definitionProvider = false
+                        client.server_capabilities.renameProvider = false
                     end
                     if client.config.name == "basedpyright" then
                         -- client.handlers["textDocument/publishDiagnostics"] = function(...)
@@ -122,6 +158,10 @@ return {
                             result.diagnostics = {}
                         end
                         client.server_capabilities.completionProvider = false
+                        client.server_capabilities.definitionProvider = false
+                        client.server_capabilities.declarationProvider = false
+                        client.server_capabilities.referencesProvider = false
+                        client.server_capabilities.renameProvider = false
                     end
                 end,
             })
