@@ -167,11 +167,10 @@ map("n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Next
 map("n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Prev Diagnostic" })
 -- map("n", "<leader>lD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Go To Declaration" })
 -- map("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", { desc = "Document Symbols" })
--- map("n", "lt", function()
---     vim.diagnostic.config({
---         virtual_lines = not vim.diagnostic.config().virtual_lines
---     })
--- end, { desc = "Toggle Display-mode" })
+map("n", "<leader>ll", function()
+    local new_config = not vim.diagnostic.config().virtual_lines
+    vim.diagnostic.config({ virtual_lines = new_config })
+end, { desc = "Toggle diagnostic [l]ines" })
 
 -- Search mappings
 -- map("n", "<leader>sb", "<cmd>Telescope git_branches<CR>", { desc = "Checkout Branch" })

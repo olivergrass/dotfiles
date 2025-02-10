@@ -209,10 +209,11 @@ return {
         },
     },
     {
-        "olivergrass/mini.pick",
+        "echasnovski/mini.pick",
         enabled = true,
         lazy = true,
         cmd = { "Pick" },
+        dependencies = { "echasnovski/mini.extra" },
         version = "*",
         config = function(_, _)
             vim.ui.select = require("mini.pick").ui_select
@@ -246,6 +247,13 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         version = "*",
         opts = {},
+        dependencies = { "echasnovski/mini.extra" },
+    },
+    {
+        "echasnovski/mini.extra",
+        lazy = true,
+        version = "*",
+        opts = {}
     },
     {
         "echasnovski/mini.surround",
