@@ -6,12 +6,11 @@ ZSH_THEME=""
 
 # Standard plugins can be found in $ZSH/plugins/
 plugins=(
-    asdf
+    mise
     z
     fzf
     command-not-found
     git
-    nvm
     rust
     zoxide
     chezmoi
@@ -20,22 +19,26 @@ plugins=(
 # must be sourced after plugins
 source $ZSH/oh-my-zsh.sh
 
+# ===============================
+# 		    exports
+# ===============================
 export COLORTERM="truecolor"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export PAGER="bat -p"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# ===============================
+# 		     aliases
+# ===============================
 alias cd="z"
 alias vimdiff="nvim -d"
 alias vi="nvim"
-alias ls="exa -1 --icons --group-directories-first" # one entry per line
-alias ll="exa -1lbF --git --no-user --icons --group-directories-first" # long list
-alias la="exa -1lbhma --git --icons --group-directories-first" # all list
+alias ls="exa"
+alias ll="exa -1lbF --git --icons" # long list
+alias la="exa -1lbhHUma --time-style=long-iso --git --color-scale --icons" # all list
 alias lt="exa --tree --level=2" # tree
 alias help="run-help"
-
-# ln -s '/mnt/c/Users/olleg/AppData/Local/Programs/Microsoft VS Code/bin/code' ~/.local/bin/code
 
 # Man page with examples
 function tldr() {
@@ -108,7 +111,7 @@ wopen ()
         md) glow -p "$fullname" ;;
         html) explorer.exe "$fullname" ;;
         jpg|png) xdg-open "$fullname" ;;
-        *) echo "Not supported: $extension" ;;
+        *) xdg-open "$fullname" ;;
     esac
 }
 
@@ -119,9 +122,10 @@ alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
 alias nvim-kick="NVIM_APPNAME=kickstart nvim"
 alias nvim-chad="NVIM_APPNAME=NvChad nvim"
 alias nvim-mvim="NVIM_APPNAME=mvim nvim"
+alias nevim="NVIM_APPNAME=nevim nvim"
 
 function nvims() {
-  items=("default" "kickstart" "LazyVim" "NvChad" "mvim")
+  items=("default" "kickstart" "LazyVim" "NvChad" "mvim" "nevim")
   config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
   if [[ -z $config ]]; then
     echo "Nothing selected"
@@ -131,7 +135,6 @@ function nvims() {
   fi
   NVIM_APPNAME=$config nvim $@
 }
-# bindkey -s ^a "nvims\n"
 
 # Set X11 as X Server
 export DISPLAY=:0
@@ -151,13 +154,5 @@ _uv_run_mod() {
 }
 compdef _uv_run_mod uv
 
-# NPM version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-[ -f "/home/olleg/.ghcup/env" ] && source "/home/olleg/.ghcup/env" # ghcup-env
+# activate mise
+eval "$(~/.local/bin/mise activate zsh)"
